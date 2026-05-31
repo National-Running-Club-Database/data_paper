@@ -1,0 +1,17 @@
+# Dataset (download locally; see README)
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.env
+.venv
+venv/
+ENV/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
