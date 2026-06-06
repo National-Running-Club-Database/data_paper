@@ -1,0 +1,99 @@
+{
+  "k_values": [
+    0.001,
+    0.0016,
+    0.002
+  ],
+  "by_k": [
+    {
+      "k": 0.001,
+      "is_deployed": false,
+      "variance_by_gender": {
+        "women": {
+          "n_athlete_seasons": 2148,
+          "median_raw_sd_sec": 108.74,
+          "median_std_sd_sec": 68.18,
+          "pct_reduction_std_vs_raw": 37.3
+        },
+        "men": {
+          "n_athlete_seasons": 3875,
+          "median_raw_sd_sec": 85.17,
+          "median_std_sd_sec": 76.66,
+          "pct_reduction_std_vs_raw": 10.0
+        }
+      },
+      "improvement_inflation": {
+        "men": {
+          "median_conv_sec": 41.9,
+          "median_std_sec": 35.0,
+          "pct_inflation_vs_full": 20.0
+        },
+        "women": {
+          "median_conv_sec": 45.5,
+          "median_std_sec": 38.2,
+          "pct_inflation_vs_full": 19.0
+        }
+      }
+    },
+    {
+      "k": 0.0016,
+      "is_deployed": true,
+      "variance_by_gender": {
+        "women": {
+          "n_athlete_seasons": 2148,
+          "median_raw_sd_sec": 108.74,
+          "median_std_sd_sec": 67.93,
+          "pct_reduction_std_vs_raw": 37.5
+        },
+        "men": {
+          "n_athlete_seasons": 3875,
+          "median_raw_sd_sec": 85.17,
+          "median_std_sd_sec": 75.96,
+          "pct_reduction_std_vs_raw": 10.8
+        }
+      },
+      "improvement_inflation": {
+        "men": {
+          "median_conv_sec": 41.9,
+          "median_std_sec": 33.3,
+          "pct_inflation_vs_full": 26.0
+        },
+        "women": {
+          "median_conv_sec": 45.5,
+          "median_std_sec": 36.8,
+          "pct_inflation_vs_full": 24.0
+        }
+      }
+    },
+    {
+      "k": 0.002,
+      "is_deployed": false,
+      "variance_by_gender": {
+        "women": {
+          "n_athlete_seasons": 2148,
+          "median_raw_sd_sec": 108.74,
+          "median_std_sd_sec": 67.15,
+          "pct_reduction_std_vs_raw": 38.3
+        },
+        "men": {
+          "n_athlete_seasons": 3875,
+          "median_raw_sd_sec": 85.17,
+          "median_std_sd_sec": 75.91,
+          "pct_reduction_std_vs_raw": 10.9
+        }
+      },
+      "improvement_inflation": {
+        "men": {
+          "median_conv_sec": 41.9,
+          "median_std_sec": 32.5,
+          "pct_inflation_vs_full": 29.0
+        },
+        "women": {
+          "median_conv_sec": 45.5,
+          "median_std_sec": 36.4,
+          "pct_inflation_vs_full": 25.0
+        }
+      }
+    }
+  ]
+}

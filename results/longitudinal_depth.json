@@ -1,0 +1,31 @@
+{
+  "total_athletes_with_results": 29926,
+  "school_year_boundary": "August 1",
+  "by_min_seasons": [
+    {
+      "min_seasons": 1,
+      "n_athletes": 29926,
+      "pct_of_athletes": 100.0
+    },
+    {
+      "min_seasons": 2,
+      "n_athletes": 10432,
+      "pct_of_athletes": 34.9
+    },
+    {
+      "min_seasons": 3,
+      "n_athletes": 4666,
+      "pct_of_athletes": 15.6
+    },
+    {
+      "min_seasons": 4,
+      "n_athletes": 1483,
+      "pct_of_athletes": 5.0
+    },
+    {
+      "min_seasons": 5,
+      "n_athletes": 139,
+      "pct_of_athletes": 0.5
+    }
+  ]
+}

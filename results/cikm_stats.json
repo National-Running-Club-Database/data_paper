@@ -1,0 +1,138 @@
+{
+  "composition": {
+    "total_results": 129603,
+    "total_athletes": 30656,
+    "total_meets": 1361,
+    "total_teams": 187,
+    "course_detail_records": 768,
+    "athlete_team_associations": 30666,
+    "by_sport": [
+      {
+        "sport_name": "Cross Country",
+        "results": 70641,
+        "athletes": 22242,
+        "meets": 524
+      },
+      {
+        "sport_name": "Indoor Track",
+        "results": 23007,
+        "athletes": 7438,
+        "meets": 328
+      },
+      {
+        "sport_name": "Outdoor Track",
+        "results": 33773,
+        "athletes": 9745,
+        "meets": 431
+      },
+      {
+        "sport_name": "Road Race",
+        "results": 2182,
+        "athletes": 1633,
+        "meets": 59
+      },
+      {
+        "sport_name": "Trail Race",
+        "results": 0,
+        "athletes": 0,
+        "meets": 0
+      }
+    ],
+    "n_sports": 5,
+    "gender_athletes": {
+      "F": 11683,
+      "M": 18243
+    },
+    "meets_with_complete_metadata_from_2023": 869,
+    "xc_results_with_course_details_pct": 41.5,
+    "date_min": "2004-04-09",
+    "date_max": "2026-05-01"
+  },
+  "variance_validation": {
+    "min_distinct_meets_per_athlete_season": 3,
+    "by_gender": [
+      {
+        "gender": "Men",
+        "n_athlete_seasons": 3875,
+        "median_raw_sd_sec": 85.17,
+        "median_std_sd_sec": 76.2,
+        "median_converted_sd_sec": 58.61,
+        "pct_reduction_std_vs_raw": 10.5,
+        "pct_reduction_std_vs_converted": -30.0
+      },
+      {
+        "gender": "Women",
+        "n_athlete_seasons": 2148,
+        "median_raw_sd_sec": 108.74,
+        "median_std_sd_sec": 67.88,
+        "median_converted_sd_sec": 54.89,
+        "pct_reduction_std_vs_raw": 37.6,
+        "pct_reduction_std_vs_converted": -23.7
+      }
+    ],
+    "pooled_median_raw_sd": 92.16,
+    "pooled_median_std_sd": 72.92,
+    "pooled_pct_reduction": 20.9
+  },
+  "improvement_demo": {
+    "Men": {
+      "n_athlete_seasons": 8900,
+      "median_improvement_sec": 33.5,
+      "by_starting_fitness": [
+        {
+          "fitness_bin": "(22, 24]",
+          "median_improvement_sec": "-26.439017683949942",
+          "n": "1"
+        },
+        {
+          "fitness_bin": "(24, 26]",
+          "median_improvement_sec": "-28.288237907749817",
+          "n": "167"
+        },
+        {
+          "fitness_bin": "(26, 28]",
+          "median_improvement_sec": "-0.7003494914499697",
+          "n": "1299"
+        },
+        {
+          "fitness_bin": "(28, 40]",
+          "median_improvement_sec": "38.950000000000045",
+          "n": "6654"
+        }
+      ],
+      "corr_n_races_improvement": 0.192
+    },
+    "Women": {
+      "n_athlete_seasons": 5500,
+      "median_improvement_sec": 36.9,
+      "by_starting_fitness": [
+        {
+          "fitness_bin": "(20, 22]",
+          "median_improvement_sec": "-32.02985693376354",
+          "n": "17"
+        },
+        {
+          "fitness_bin": "(22, 24]",
+          "median_improvement_sec": "-8.381652094840433",
+          "n": "280"
+        },
+        {
+          "fitness_bin": "(24, 26]",
+          "median_improvement_sec": "15.260964018999857",
+          "n": "1064"
+        },
+        {
+          "fitness_bin": "(26, 28]",
+          "median_improvement_sec": "27.200000000000045",
+          "n": "1403"
+        },
+        {
+          "fitness_bin": "(28, 40]",
+          "median_improvement_sec": "64.29999999999995",
+          "n": "2499"
+        }
+      ],
+      "corr_n_races_improvement": 0.165
+    }
+  }
+}

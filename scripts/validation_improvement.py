@@ -1,0 +1,175 @@
+"""Within-season improvement: converted-only vs full standardization (formula validation)."""
+
+from __future__ import annotations
+
+import numpy as np
+import pandas as pd
+
+from standardization import converted_only_xc, standardize_xc_row
+
+
+def _xc_improvements(tables: dict, mode: str) -> pd.DataFrame:
+    meet = tables["meet"]
+    result = tables["result"]
+    athlete = tables["athlete"]
+    running_event = tables["running_event"]
+    course_details = tables["course_details"]
+
+    xc_meets = set(
+        meet.loc[(meet["sport_id"] == 1) & (~meet["nationals"].astype(bool)), "meet_id"]
+    )
+    df = result[result["meet_id"].isin(xc_meets)].copy()
+    df = df.merge(athlete[["athlete_id", "gender"]], on="athlete_id")
+    df = df.merge(running_event, on="running_event_id")
+    from schema import meet_altitude_column
+
+    alt_col = meet_altitude_column(meet)
+    df = df.merge(
+        meet[["meet_id", "start_date", alt_col]].rename(columns={alt_col: "altitude"}),
+        on="meet_id",
+    )
+    df["race_date"] = pd.to_datetime(df["start_date"], errors="coerce")
+
+    rows = []
+    for _, row in df.iterrows():
+        if mode == "standardized":
+            _, t = standardize_xc_row(row, course_details)
+        elif mode == "converted":
+            t = converted_only_xc(row, course_details)
+        else:
+            raise ValueError(mode)
+        if np.isfinite(t):
+            rows.append(
+                {
+                    "athlete_id": row["athlete_id"],
+                    "gender": row["gender"],
+                    "season": row["race_date"].year,
+                    "race_date": row["race_date"],
+                    "time": t,
+                }
+            )
+    return pd.DataFrame(rows).dropna(subset=["race_date"])
+
+
+def _improvement_frame(perf: pd.DataFrame) -> pd.DataFrame:
+    rows = []
+    for (_, _, gender), grp in perf.groupby(["athlete_id", "season", "gender"]):
+        if len(grp) < 2:
+            continue
+        grp = grp.sort_values("race_date")
+        rows.append(
+            {
+                "gender": gender,
+                "improvement_sec": grp.iloc[0]["time"] - grp.iloc[1:]["time"].min(),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def _bootstrap_median_ci(
+    values: np.ndarray, n_boot: int = 2000, seed: int = 42
+) -> tuple[float, float, float]:
+    rng = np.random.default_rng(seed)
+    meds = []
+    n = len(values)
+    for _ in range(n_boot):
+        sample = values[rng.integers(0, n, size=n)]
+        meds.append(float(np.median(sample)))
+    meds_arr = np.array(meds)
+    return (
+        float(np.median(values)),
+        float(np.percentile(meds_arr, 2.5)),
+        float(np.percentile(meds_arr, 97.5)),
+    )
+
+
+def _median_improvement_by_gender(perf: pd.DataFrame, bootstrap: bool = False) -> dict[str, dict]:
+    imp = _improvement_frame(perf)
+    out = {}
+    for gender, label in [("M", "men"), ("F", "women")]:
+        g = imp[imp["gender"] == gender]
+        if len(g) == 0:
+            out[label] = {"n_athlete_seasons": 0, "median_improvement_sec": None}
+            continue
+        vals = g["improvement_sec"].to_numpy()
+        med, lo, hi = _bootstrap_median_ci(vals) if bootstrap else (float(np.median(vals)), None, None)
+        entry = {
+            "n_athlete_seasons": int(len(g)),
+            "median_improvement_sec": round(med, 1),
+        }
+        if bootstrap:
+            entry["median_ci95_lo"] = round(lo, 1)
+            entry["median_ci95_hi"] = round(hi, 1)
+        out[label] = entry
+    return out
+
+
+def _bootstrap_ratio_ci(
+    conv: np.ndarray, std: np.ndarray, n_boot: int = 2000, seed: int = 42
+) -> tuple[float, float, float]:
+    """Bootstrap CI for median(conv)/median(std) on paired athlete-season indices."""
+    rng = np.random.default_rng(seed)
+    n = len(conv)
+    ratios = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, n, size=n)
+        c_med = float(np.median(conv[idx]))
+        s_med = float(np.median(std[idx]))
+        if s_med > 0:
+            ratios.append(c_med / s_med)
+    ratios_arr = np.array(ratios)
+    point = float(np.median(conv) / np.median(std)) if np.median(std) > 0 else np.nan
+    return point, float(np.percentile(ratios_arr, 2.5)), float(np.percentile(ratios_arr, 97.5))
+
+
+def improvement_summary(tables: dict) -> dict:
+    """Compare within-season improvement under converted-only vs full standardization."""
+    conv = _xc_improvements(tables, "converted")
+    std = _xc_improvements(tables, "standardized")
+    by_mode = {
+        "converted_only": _median_improvement_by_gender(conv, bootstrap=True),
+        "fully_standardized": _median_improvement_by_gender(std, bootstrap=True),
+    }
+
+    conv_imp = {}
+    std_imp = {}
+    for df, store in ((conv, conv_imp), (std, std_imp)):
+        for (aid, season, gender), grp in df.groupby(["athlete_id", "season", "gender"]):
+            if len(grp) < 2:
+                continue
+            grp = grp.sort_values("race_date")
+            store[(aid, season, gender)] = float(
+                grp.iloc[0]["time"] - grp.iloc[1:]["time"].min()
+            )
+
+    inflation = {}
+    ratio_ci = {}
+    for gender, label in [("M", "men"), ("F", "women")]:
+        keys = [k for k in conv_imp if k[2] == gender and k in std_imp]
+        c_arr = np.array([conv_imp[k] for k in keys])
+        s_arr = np.array([std_imp[k] for k in keys])
+        c = by_mode["converted_only"][label]["median_improvement_sec"]
+        s = by_mode["fully_standardized"][label]["median_improvement_sec"]
+        if c is not None and s is not None and s > 0 and len(c_arr) > 0:
+            r, r_lo, r_hi = _bootstrap_ratio_ci(c_arr, s_arr)
+            ratio = c / s
+            inflation[label] = {
+                "excess_median_sec": round(c - s, 1),
+                "ratio_converted_to_standardized": round(ratio, 2),
+                "pct_inflation_vs_full": round(100 * (ratio - 1), 1),
+            }
+            ratio_ci[label] = {
+                "ratio_point": round(r, 2),
+                "ratio_ci95_lo": round(r_lo, 2),
+                "ratio_ci95_hi": round(r_hi, 2),
+            }
+        else:
+            inflation[label] = None
+            ratio_ci[label] = None
+
+    return {
+        "by_mode": by_mode,
+        "converted_inflation_vs_standardized": inflation,
+        "ratio_bootstrap_ci95": ratio_ci,
+        "bootstrap_replicates": 2000,
+    }

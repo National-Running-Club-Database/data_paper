@@ -1,0 +1,100 @@
+{
+  "data_directory": "/Users/jonathankarr/Documents/data_paper/data",
+  "expected_csv_files": {
+    "athlete.csv": {
+      "exists": true,
+      "path": "/Users/jonathankarr/Documents/data_paper/data/athlete.csv"
+    },
+    "athlete_team_association.csv": {
+      "exists": true,
+      "path": "/Users/jonathankarr/Documents/data_paper/data/athlete_team_association.csv"
+    },
+    "course_details.csv": {
+      "exists": true,
+      "path": "/Users/jonathankarr/Documents/data_paper/data/course_details.csv"
+    },
+    "meet.csv": {
+      "exists": true,
+      "path": "/Users/jonathankarr/Documents/data_paper/data/meet.csv"
+    },
+    "result.csv": {
+      "exists": true,
+      "path": "/Users/jonathankarr/Documents/data_paper/data/result.csv"
+    },
+    "running_event.csv": {
+      "exists": true,
+      "path": "/Users/jonathankarr/Documents/data_paper/data/running_event.csv"
+    },
+    "sport.csv": {
+      "exists": true,
+      "path": "/Users/jonathankarr/Documents/data_paper/data/sport.csv"
+    },
+    "team.csv": {
+      "exists": true,
+      "path": "/Users/jonathankarr/Documents/data_paper/data/team.csv"
+    }
+  },
+  "missing_files": [],
+  "load_ok": true,
+  "composition": {
+    "total_results": 129603,
+    "total_athletes": 30656,
+    "total_meets": 1361,
+    "total_teams": 187,
+    "course_detail_records": 768,
+    "athlete_team_associations": 30666,
+    "by_sport": [
+      {
+        "sport_name": "Cross Country",
+        "results": 70641,
+        "athletes": 22242,
+        "meets": 524
+      },
+      {
+        "sport_name": "Indoor Track",
+        "results": 23007,
+        "athletes": 7438,
+        "meets": 328
+      },
+      {
+        "sport_name": "Outdoor Track",
+        "results": 33773,
+        "athletes": 9745,
+        "meets": 431
+      },
+      {
+        "sport_name": "Road Race",
+        "results": 2182,
+        "athletes": 1633,
+        "meets": 59
+      }
+    ],
+    "results_by_era": {
+      "comprehensive": 64835,
+      "historical": 64768
+    },
+    "gender_athletes": {
+      "F": 11683,
+      "M": 18243
+    },
+    "date_min": "2004-04-09",
+    "date_max": "2026-05-01"
+  },
+  "urls": {
+    "zenodo": "https://zenodo.org/records/17917357",
+    "dataset_github": "https://github.com/National-Running-Club-Database/national_running_club_database_public_dataset",
+    "analysis_github": "https://github.com/National-Running-Club-Database/data_paper"
+  },
+  "local_docs": {
+    "root_readme": true,
+    "datasheet_md": true,
+    "results_dataset_stats": true
+  },
+  "fair_summary": {
+    "findable": true,
+    "accessible": true,
+    "interoperable": "CSV",
+    "reusable": "IRB non-human-subjects; PII removed in public export"
+  },
+  "check_passed": true
+}

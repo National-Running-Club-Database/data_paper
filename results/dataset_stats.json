@@ -1,0 +1,895 @@
+{
+  "composition": {
+    "total_results": 129327,
+    "total_athletes": 29544,
+    "roster_athletes": 30260,
+    "total_meets": 1336,
+    "total_teams": 187,
+    "course_detail_records": 869,
+    "athlete_team_associations": 30269,
+    "by_sport": [
+      {
+        "sport_name": "Cross Country",
+        "results": 70506,
+        "athletes": 22023,
+        "meets": 524
+      },
+      {
+        "sport_name": "Indoor Track",
+        "results": 22876,
+        "athletes": 7340,
+        "meets": 326
+      },
+      {
+        "sport_name": "Outdoor Track",
+        "results": 33763,
+        "athletes": 9677,
+        "meets": 428
+      },
+      {
+        "sport_name": "Road Race",
+        "results": 2182,
+        "athletes": 1631,
+        "meets": 58
+      }
+    ],
+    "results_by_era": {
+      "comprehensive": 64566,
+      "historical": 64761
+    },
+    "gender_athletes": {
+      "F": 11569,
+      "M": 17975
+    },
+    "date_min": "2004-04-09",
+    "date_max": "2026-05-01",
+    "athlete_sport_overlap": {
+      "athletes_with_results": 29544,
+      "per_sport_athlete_sum": 40671,
+      "single_sport": 21177,
+      "multi_sport": 8367,
+      "multi_sport_pct": 28.3,
+      "three_plus_sports": 2504,
+      "four_sports": 256,
+      "by_num_sports": {
+        "1": 21177,
+        "2": 5863,
+        "3": 2248,
+        "4": 256
+      },
+      "pairwise": {
+        "Cross Country|Indoor Track": 3469,
+        "Cross Country|Outdoor Track": 4793,
+        "Cross Country|Road Race": 1192,
+        "Indoor Track|Outdoor Track": 3736,
+        "Indoor Track|Road Race": 386,
+        "Outdoor Track|Road Race": 567
+      }
+    }
+  },
+  "coverage_by_sport_era": [
+    {
+      "sport": "Cross Country",
+      "era": "historical",
+      "results": 46930,
+      "athletes": 16045,
+      "meets": 244,
+      "weather_pct": 1.1,
+      "barometric_pct": 1.1,
+      "course_features_pct": 0.1,
+      "meet_altitude_pct": 97.5,
+      "metadata_pct": 1.1
+    },
+    {
+      "sport": "Cross Country",
+      "era": "comprehensive",
+      "results": 23576,
+      "athletes": 7353,
+      "meets": 280,
+      "weather_pct": 97.7,
+      "barometric_pct": 97.7,
+      "course_features_pct": 38.1,
+      "meet_altitude_pct": 100.0,
+      "metadata_pct": 97.7
+    },
+    {
+      "sport": "Indoor Track",
+      "era": "historical",
+      "results": 4178,
+      "athletes": 2185,
+      "meets": 60,
+      "weather_pct": 0.0,
+      "barometric_pct": 0.0,
+      "course_features_pct": 0.0,
+      "meet_altitude_pct": 100.0,
+      "metadata_pct": 0.0
+    },
+    {
+      "sport": "Indoor Track",
+      "era": "comprehensive",
+      "results": 18698,
+      "athletes": 5583,
+      "meets": 266,
+      "weather_pct": 0.0,
+      "barometric_pct": 0.0,
+      "course_features_pct": 0.0,
+      "meet_altitude_pct": 99.4,
+      "metadata_pct": 0.0
+    },
+    {
+      "sport": "Outdoor Track",
+      "era": "historical",
+      "results": 12321,
+      "athletes": 4829,
+      "meets": 168,
+      "weather_pct": 0.0,
+      "barometric_pct": 0.0,
+      "course_features_pct": 0.0,
+      "meet_altitude_pct": 100.0,
+      "metadata_pct": 0.0
+    },
+    {
+      "sport": "Outdoor Track",
+      "era": "comprehensive",
+      "results": 21442,
+      "athletes": 5530,
+      "meets": 260,
+      "weather_pct": 34.6,
+      "barometric_pct": 34.6,
+      "course_features_pct": 0.0,
+      "meet_altitude_pct": 98.9,
+      "metadata_pct": 34.6
+    },
+    {
+      "sport": "Road Race",
+      "era": "historical",
+      "results": 1332,
+      "athletes": 1052,
+      "meets": 16,
+      "weather_pct": 34.5,
+      "barometric_pct": 34.5,
+      "course_features_pct": 0.0,
+      "meet_altitude_pct": 100.0,
+      "metadata_pct": 34.5
+    },
+    {
+      "sport": "Road Race",
+      "era": "comprehensive",
+      "results": 850,
+      "athletes": 608,
+      "meets": 42,
+      "weather_pct": 29.4,
+      "barometric_pct": 29.4,
+      "course_features_pct": 15.6,
+      "meet_altitude_pct": 100.0,
+      "metadata_pct": 29.4
+    }
+  ],
+  "gender_by_sport_era": [
+    {
+      "sport": "Cross Country",
+      "era": "historical",
+      "gender": "F",
+      "results": 18451,
+      "metadata_pct": 0.9
+    },
+    {
+      "sport": "Cross Country",
+      "era": "historical",
+      "gender": "M",
+      "results": 28479,
+      "metadata_pct": 1.3
+    },
+    {
+      "sport": "Cross Country",
+      "era": "comprehensive",
+      "gender": "F",
+      "results": 8748,
+      "metadata_pct": 98.0
+    },
+    {
+      "sport": "Cross Country",
+      "era": "comprehensive",
+      "gender": "M",
+      "results": 14828,
+      "metadata_pct": 97.5
+    },
+    {
+      "sport": "Indoor Track",
+      "era": "historical",
+      "gender": "F",
+      "results": 1514,
+      "metadata_pct": 0.0
+    },
+    {
+      "sport": "Indoor Track",
+      "era": "historical",
+      "gender": "M",
+      "results": 2664,
+      "metadata_pct": 0.0
+    },
+    {
+      "sport": "Indoor Track",
+      "era": "comprehensive",
+      "gender": "F",
+      "results": 6180,
+      "metadata_pct": 0.0
+    },
+    {
+      "sport": "Indoor Track",
+      "era": "comprehensive",
+      "gender": "M",
+      "results": 12518,
+      "metadata_pct": 0.0
+    },
+    {
+      "sport": "Outdoor Track",
+      "era": "historical",
+      "gender": "F",
+      "results": 4006,
+      "metadata_pct": 0.0
+    },
+    {
+      "sport": "Outdoor Track",
+      "era": "historical",
+      "gender": "M",
+      "results": 8315,
+      "metadata_pct": 0.0
+    },
+    {
+      "sport": "Outdoor Track",
+      "era": "comprehensive",
+      "gender": "F",
+      "results": 7014,
+      "metadata_pct": 36.3
+    },
+    {
+      "sport": "Outdoor Track",
+      "era": "comprehensive",
+      "gender": "M",
+      "results": 14428,
+      "metadata_pct": 33.7
+    },
+    {
+      "sport": "Road Race",
+      "era": "historical",
+      "gender": "F",
+      "results": 650,
+      "metadata_pct": 32.6
+    },
+    {
+      "sport": "Road Race",
+      "era": "historical",
+      "gender": "M",
+      "results": 682,
+      "metadata_pct": 36.2
+    },
+    {
+      "sport": "Road Race",
+      "era": "comprehensive",
+      "gender": "F",
+      "results": 333,
+      "metadata_pct": 27.9
+    },
+    {
+      "sport": "Road Race",
+      "era": "comprehensive",
+      "gender": "M",
+      "results": 517,
+      "metadata_pct": 30.4
+    }
+  ],
+  "event_breakdown": {
+    "by_sport_gender_category": [
+      {
+        "sport": "Cross Country",
+        "gender": "F",
+        "results": 27199,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 27199,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Cross Country",
+        "gender": "M",
+        "results": 43307,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 43307,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Indoor Track",
+        "gender": "F",
+        "results": 7694,
+        "sprint": 2425,
+        "mid_distance": 910,
+        "distance": 2650,
+        "relay": 630,
+        "field": 1079
+      },
+      {
+        "sport": "Indoor Track",
+        "gender": "M",
+        "results": 15182,
+        "sprint": 5332,
+        "mid_distance": 1832,
+        "distance": 5332,
+        "relay": 1092,
+        "field": 1594
+      },
+      {
+        "sport": "Outdoor Track",
+        "gender": "F",
+        "results": 11020,
+        "sprint": 3663,
+        "mid_distance": 1407,
+        "distance": 3474,
+        "relay": 655,
+        "field": 1821
+      },
+      {
+        "sport": "Outdoor Track",
+        "gender": "M",
+        "results": 22743,
+        "sprint": 7281,
+        "mid_distance": 3116,
+        "distance": 8212,
+        "relay": 1413,
+        "field": 2721
+      },
+      {
+        "sport": "Road Race",
+        "gender": "F",
+        "results": 983,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 983,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Road Race",
+        "gender": "M",
+        "results": 1199,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 1199,
+        "relay": 0,
+        "field": 0
+      }
+    ],
+    "by_sport_era_gender_category": [
+      {
+        "sport": "Cross Country",
+        "era": "historical",
+        "gender": "F",
+        "results": 18451,
+        "metadata_pct": 0.9,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 18451,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Cross Country",
+        "era": "historical",
+        "gender": "M",
+        "results": 28479,
+        "metadata_pct": 1.3,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 28479,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Cross Country",
+        "era": "comprehensive",
+        "gender": "F",
+        "results": 8748,
+        "metadata_pct": 98.0,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 8748,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Cross Country",
+        "era": "comprehensive",
+        "gender": "M",
+        "results": 14828,
+        "metadata_pct": 97.5,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 14828,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Indoor Track",
+        "era": "historical",
+        "gender": "F",
+        "results": 1514,
+        "metadata_pct": 0.0,
+        "sprint": 399,
+        "mid_distance": 198,
+        "distance": 583,
+        "relay": 139,
+        "field": 195
+      },
+      {
+        "sport": "Indoor Track",
+        "era": "historical",
+        "gender": "M",
+        "results": 2664,
+        "metadata_pct": 0.0,
+        "sprint": 778,
+        "mid_distance": 305,
+        "distance": 1054,
+        "relay": 229,
+        "field": 298
+      },
+      {
+        "sport": "Indoor Track",
+        "era": "comprehensive",
+        "gender": "F",
+        "results": 6180,
+        "metadata_pct": 0.0,
+        "sprint": 2026,
+        "mid_distance": 712,
+        "distance": 2067,
+        "relay": 491,
+        "field": 884
+      },
+      {
+        "sport": "Indoor Track",
+        "era": "comprehensive",
+        "gender": "M",
+        "results": 12518,
+        "metadata_pct": 0.0,
+        "sprint": 4554,
+        "mid_distance": 1527,
+        "distance": 4278,
+        "relay": 863,
+        "field": 1296
+      },
+      {
+        "sport": "Outdoor Track",
+        "era": "historical",
+        "gender": "F",
+        "results": 4006,
+        "metadata_pct": 0.0,
+        "sprint": 1375,
+        "mid_distance": 468,
+        "distance": 1307,
+        "relay": 231,
+        "field": 625
+      },
+      {
+        "sport": "Outdoor Track",
+        "era": "historical",
+        "gender": "M",
+        "results": 8315,
+        "metadata_pct": 0.0,
+        "sprint": 2604,
+        "mid_distance": 1044,
+        "distance": 3129,
+        "relay": 573,
+        "field": 965
+      },
+      {
+        "sport": "Outdoor Track",
+        "era": "comprehensive",
+        "gender": "F",
+        "results": 7014,
+        "metadata_pct": 36.3,
+        "sprint": 2288,
+        "mid_distance": 939,
+        "distance": 2167,
+        "relay": 424,
+        "field": 1196
+      },
+      {
+        "sport": "Outdoor Track",
+        "era": "comprehensive",
+        "gender": "M",
+        "results": 14428,
+        "metadata_pct": 33.7,
+        "sprint": 4677,
+        "mid_distance": 2072,
+        "distance": 5083,
+        "relay": 840,
+        "field": 1756
+      },
+      {
+        "sport": "Road Race",
+        "era": "historical",
+        "gender": "F",
+        "results": 650,
+        "metadata_pct": 32.6,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 650,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Road Race",
+        "era": "historical",
+        "gender": "M",
+        "results": 682,
+        "metadata_pct": 36.2,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 682,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Road Race",
+        "era": "comprehensive",
+        "gender": "F",
+        "results": 333,
+        "metadata_pct": 27.9,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 333,
+        "relay": 0,
+        "field": 0
+      },
+      {
+        "sport": "Road Race",
+        "era": "comprehensive",
+        "gender": "M",
+        "results": 517,
+        "metadata_pct": 30.4,
+        "sprint": 0,
+        "mid_distance": 0,
+        "distance": 517,
+        "relay": 0,
+        "field": 0
+      }
+    ],
+    "totals_by_category": {
+      "sprint": 18701,
+      "mid_distance": 7265,
+      "distance": 92356,
+      "relay": 3790,
+      "field": 7215
+    }
+  },
+  "variance_validation": {
+    "min_distinct_meets_per_athlete_season": 3,
+    "by_gender": [
+      {
+        "gender": "Men",
+        "n_athlete_seasons": 3900,
+        "median_raw_sd_sec": 85.42,
+        "median_converted_only_sd_sec": 59.17,
+        "median_std_sd_sec": 76.95,
+        "pct_reduction_std_vs_raw": 9.9,
+        "pct_reduction_std_vs_converted": -30.1
+      },
+      {
+        "gender": "Women",
+        "n_athlete_seasons": 2152,
+        "median_raw_sd_sec": 108.47,
+        "median_converted_only_sd_sec": 54.88,
+        "median_std_sd_sec": 67.3,
+        "pct_reduction_std_vs_raw": 38.0,
+        "pct_reduction_std_vs_converted": -22.6
+      }
+    ],
+    "pooled_median_raw_sd": 92.24,
+    "pooled_median_converted_only_sd": 57.37,
+    "pooled_median_std_sd": 73.2,
+    "pooled_pct_reduction_std_vs_raw": 20.7,
+    "pooled_pct_reduction_std_vs_converted": -27.6
+  },
+  "heat_validation": {
+    "unit_tests": {
+      "at_100": 1.0,
+      "at_110": 0.9984,
+      "at_120": 0.9936,
+      "monotone_above_100": true
+    },
+    "piecewise_fit": {
+      "hadley_source": "Maximum Performance Running temp+dew bands (2013)",
+      "deployed_coefficient_k": 0.0016,
+      "least_squares_k_vs_band_midpoints": 0.001642,
+      "formula": "slowdown_pct = k * (H - 100)^2; f_weather = 1 - slowdown_pct / 100",
+      "band_midpoint_comparison": [
+        {
+          "H_mid": 105.5,
+          "hadley_pct_lo": 0.0,
+          "hadley_pct_hi": 0.5,
+          "hadley_pct_mid": 0.25,
+          "quadratic_pct": 0.048,
+          "error_pct": -0.202
+        },
+        {
+          "H_mid": 115.5,
+          "hadley_pct_lo": 0.5,
+          "hadley_pct_hi": 1.0,
+          "hadley_pct_mid": 0.75,
+          "quadratic_pct": 0.384,
+          "error_pct": -0.366
+        },
+        {
+          "H_mid": 125.5,
+          "hadley_pct_lo": 1.0,
+          "hadley_pct_hi": 2.0,
+          "hadley_pct_mid": 1.5,
+          "quadratic_pct": 1.04,
+          "error_pct": -0.46
+        },
+        {
+          "H_mid": 135.5,
+          "hadley_pct_lo": 2.0,
+          "hadley_pct_hi": 3.0,
+          "hadley_pct_mid": 2.5,
+          "quadratic_pct": 2.016,
+          "error_pct": -0.484
+        },
+        {
+          "H_mid": 145.5,
+          "hadley_pct_lo": 3.0,
+          "hadley_pct_hi": 4.5,
+          "hadley_pct_mid": 3.75,
+          "quadratic_pct": 3.312,
+          "error_pct": -0.438
+        },
+        {
+          "H_mid": 155.5,
+          "hadley_pct_lo": 4.5,
+          "hadley_pct_hi": 6.0,
+          "hadley_pct_mid": 5.25,
+          "quadratic_pct": 4.928,
+          "error_pct": -0.322
+        },
+        {
+          "H_mid": 165.5,
+          "hadley_pct_lo": 6.0,
+          "hadley_pct_hi": 8.0,
+          "hadley_pct_mid": 7.0,
+          "quadratic_pct": 6.864,
+          "error_pct": -0.136
+        },
+        {
+          "H_mid": 175.5,
+          "hadley_pct_lo": 8.0,
+          "hadley_pct_hi": 10.0,
+          "hadley_pct_mid": 9.0,
+          "quadratic_pct": 9.12,
+          "error_pct": 0.12
+        }
+      ],
+      "rmse_pct_vs_band_midpoints": 0.3444,
+      "integer_H_101_to_180": {
+        "n": 80,
+        "pct_within_hadley_band": 70.0,
+        "max_pct_below_band_lo": 0.4624,
+        "max_pct_above_band_hi": 0.24
+      },
+      "rmse_pct_vs_linear_piecewise_101_180": {
+        "deployed_k": 0.3387,
+        "least_squares_k": 0.32
+      },
+      "example_factors": {
+        "H_110": 0.9984,
+        "H_145": 0.9676,
+        "H_160": 0.9424
+      },
+      "validation_passed": true
+    },
+    "empirical": {
+      "n_results_with_weather": 23567,
+      "n_hot_races_H_gt_100": 18192,
+      "n_mild_races_H_le_100": 5375,
+      "mean_factor_when_hot": 0.9884,
+      "mean_factor_when_mild": 1.0,
+      "median_raw_sec_hot": 1762.0,
+      "median_adj_sec_hot": 1742.6,
+      "hot_races_median_time_reduced": true,
+      "corr_raw_time_vs_heat_index": 0.0133,
+      "corr_heat_adjusted_time_vs_heat_index": -0.043,
+      "corr_raw_hot_subset": 0.0017,
+      "corr_adj_hot_subset": -0.0599,
+      "corr_reduced_overall": false,
+      "corr_reduced_hot_subset": false,
+      "validation_passed": true
+    }
+  },
+  "improvement_demo": {
+    "by_mode": {
+      "converted_only": {
+        "men": {
+          "n_athlete_seasons": 8910,
+          "median_improvement_sec": 41.9,
+          "median_ci95_lo": 40.0,
+          "median_ci95_hi": 44.4
+        },
+        "women": {
+          "n_athlete_seasons": 5505,
+          "median_improvement_sec": 45.5,
+          "median_ci95_lo": 43.1,
+          "median_ci95_hi": 48.3
+        }
+      },
+      "fully_standardized": {
+        "men": {
+          "n_athlete_seasons": 8910,
+          "median_improvement_sec": 32.8,
+          "median_ci95_lo": 30.5,
+          "median_ci95_hi": 35.4
+        },
+        "women": {
+          "n_athlete_seasons": 5505,
+          "median_improvement_sec": 36.6,
+          "median_ci95_lo": 32.4,
+          "median_ci95_hi": 40.1
+        }
+      }
+    },
+    "converted_inflation_vs_standardized": {
+      "men": {
+        "excess_median_sec": 9.1,
+        "ratio_converted_to_standardized": 1.28,
+        "pct_inflation_vs_full": 27.7
+      },
+      "women": {
+        "excess_median_sec": 8.9,
+        "ratio_converted_to_standardized": 1.24,
+        "pct_inflation_vs_full": 24.3
+      }
+    },
+    "ratio_bootstrap_ci95": {
+      "men": {
+        "ratio_point": 1.28,
+        "ratio_ci95_lo": 1.23,
+        "ratio_ci95_hi": 1.35
+      },
+      "women": {
+        "ratio_point": 1.24,
+        "ratio_ci95_lo": 1.18,
+        "ratio_ci95_hi": 1.35
+      }
+    },
+    "bootstrap_replicates": 2000
+  },
+  "longitudinal_depth": {
+    "total_athletes_with_results": 29544,
+    "by_min_seasons": [
+      {
+        "min_seasons": 1,
+        "n_athletes": 29544,
+        "pct_of_athletes": 100.0
+      },
+      {
+        "min_seasons": 2,
+        "n_athletes": 10393,
+        "pct_of_athletes": 35.2
+      },
+      {
+        "min_seasons": 3,
+        "n_athletes": 4669,
+        "pct_of_athletes": 15.8
+      },
+      {
+        "min_seasons": 4,
+        "n_athletes": 1487,
+        "pct_of_athletes": 5.0
+      },
+      {
+        "min_seasons": 5,
+        "n_athletes": 139,
+        "pct_of_athletes": 0.5
+      }
+    ]
+  },
+  "k_sensitivity": {
+    "k_values": [
+      0.001,
+      0.0016,
+      0.002
+    ],
+    "by_k": [
+      {
+        "k": 0.001,
+        "is_deployed": false,
+        "variance_by_gender": {
+          "women": {
+            "n_athlete_seasons": 2152,
+            "median_raw_sd_sec": 108.47,
+            "median_std_sd_sec": 67.94,
+            "pct_reduction_std_vs_raw": 37.4
+          },
+          "men": {
+            "n_athlete_seasons": 3900,
+            "median_raw_sd_sec": 85.42,
+            "median_std_sd_sec": 77.27,
+            "pct_reduction_std_vs_raw": 9.5
+          }
+        },
+        "improvement_inflation": {
+          "men": {
+            "median_conv_sec": 41.9,
+            "median_std_sec": 34.3,
+            "pct_inflation_vs_full": 22.0
+          },
+          "women": {
+            "median_conv_sec": 45.5,
+            "median_std_sec": 37.4,
+            "pct_inflation_vs_full": 22.0
+          }
+        }
+      },
+      {
+        "k": 0.0016,
+        "is_deployed": true,
+        "variance_by_gender": {
+          "women": {
+            "n_athlete_seasons": 2152,
+            "median_raw_sd_sec": 108.47,
+            "median_std_sd_sec": 67.3,
+            "pct_reduction_std_vs_raw": 38.0
+          },
+          "men": {
+            "n_athlete_seasons": 3900,
+            "median_raw_sd_sec": 85.42,
+            "median_std_sd_sec": 76.95,
+            "pct_reduction_std_vs_raw": 9.9
+          }
+        },
+        "improvement_inflation": {
+          "men": {
+            "median_conv_sec": 41.9,
+            "median_std_sec": 32.8,
+            "pct_inflation_vs_full": 28.0
+          },
+          "women": {
+            "median_conv_sec": 45.5,
+            "median_std_sec": 36.6,
+            "pct_inflation_vs_full": 24.0
+          }
+        }
+      },
+      {
+        "k": 0.002,
+        "is_deployed": false,
+        "variance_by_gender": {
+          "women": {
+            "n_athlete_seasons": 2152,
+            "median_raw_sd_sec": 108.47,
+            "median_std_sd_sec": 66.67,
+            "pct_reduction_std_vs_raw": 38.5
+          },
+          "men": {
+            "n_athlete_seasons": 3900,
+            "median_raw_sd_sec": 85.42,
+            "median_std_sd_sec": 76.64,
+            "pct_reduction_std_vs_raw": 10.3
+          }
+        },
+        "improvement_inflation": {
+          "men": {
+            "median_conv_sec": 41.9,
+            "median_std_sec": 32.1,
+            "pct_inflation_vs_full": 31.0
+          },
+          "women": {
+            "median_conv_sec": 45.5,
+            "median_std_sec": 35.6,
+            "pct_inflation_vs_full": 28.0
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "men": {
+    "converted_only": {
+      "r2": 0.802,
+      "train_n": 772,
+      "test_n": 743
+    },
+    "standardized": {
+      "r2": 0.59,
+      "train_n": 772,
+      "test_n": 690
+    }
+  },
+  "women": {
+    "converted_only": {
+      "r2": 0.796,
+      "train_n": 485,
+      "test_n": 428
+    },
+    "standardized": {
+      "r2": 0.44,
+      "train_n": 485,
+      "test_n": 410
+    }
+  }
+}

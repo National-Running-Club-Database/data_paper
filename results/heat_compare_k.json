@@ -1,0 +1,197 @@
+{
+  "default_grid": [
+    0.0012,
+    0.0014,
+    0.0015,
+    0.0016,
+    0.001642,
+    0.0018,
+    0.002
+  ],
+  "hadley_ls_k_exact": 0.001642,
+  "deployed_k": 0.0015,
+  "n_xc_with_weather": 24081,
+  "comparisons": [
+    {
+      "k": 0.0012,
+      "is_deployed": false,
+      "is_hadley_ls": false,
+      "literature": {
+        "rmse_vs_band_midpoints_pp": 1.3163,
+        "rmse_vs_hadley_linear_101_180_pp": 1.3138,
+        "pct_integer_H_inside_hadley_band": 15.0,
+        "max_pp_below_band_lo": 1.9508,
+        "max_pp_above_band_hi": 0.0,
+        "slowdown_pct_at_H_110": 0.12,
+        "slowdown_pct_at_H_145": 2.43,
+        "slowdown_pct_at_H_160": 4.32,
+        "weather_factor_at_H_145": 0.9757
+      },
+      "empirical": {
+        "corr_after_heat_vs_H_hot": -0.0318,
+        "corr_pre_weather_vs_H_hot": -0.0073,
+        "mean_slowdown_pct_when_hot": 0.8817,
+        "within_athlete_season_sd_ratio_mean": 0.9909
+      }
+    },
+    {
+      "k": 0.0014,
+      "is_deployed": false,
+      "is_hadley_ls": false,
+      "literature": {
+        "rmse_vs_band_midpoints_pp": 0.7693,
+        "rmse_vs_hadley_linear_101_180_pp": 0.7632,
+        "pct_integer_H_inside_hadley_band": 46.2,
+        "max_pp_below_band_lo": 0.9426,
+        "max_pp_above_band_hi": 0.0,
+        "slowdown_pct_at_H_110": 0.14,
+        "slowdown_pct_at_H_145": 2.835,
+        "slowdown_pct_at_H_160": 5.04,
+        "weather_factor_at_H_145": 0.97165
+      },
+      "empirical": {
+        "corr_after_heat_vs_H_hot": -0.0359,
+        "corr_pre_weather_vs_H_hot": -0.0073,
+        "mean_slowdown_pct_when_hot": 1.0287,
+        "within_athlete_season_sd_ratio_mean": 0.9909
+      }
+    },
+    {
+      "k": 0.0015,
+      "is_deployed": true,
+      "is_hadley_ls": false,
+      "literature": {
+        "rmse_vs_band_midpoints_pp": 0.5212,
+        "rmse_vs_hadley_linear_101_180_pp": 0.5139,
+        "pct_integer_H_inside_hadley_band": 58.8,
+        "max_pp_below_band_lo": 0.5985,
+        "max_pp_above_band_hi": 0.0,
+        "slowdown_pct_at_H_110": 0.15,
+        "slowdown_pct_at_H_145": 3.0375,
+        "slowdown_pct_at_H_160": 5.4,
+        "weather_factor_at_H_145": 0.969625
+      },
+      "empirical": {
+        "corr_after_heat_vs_H_hot": -0.038,
+        "corr_pre_weather_vs_H_hot": -0.0073,
+        "mean_slowdown_pct_when_hot": 1.1022,
+        "within_athlete_season_sd_ratio_mean": 0.991
+      }
+    },
+    {
+      "k": 0.0016,
+      "is_deployed": false,
+      "is_hadley_ls": false,
+      "literature": {
+        "rmse_vs_band_midpoints_pp": 0.3441,
+        "rmse_vs_hadley_linear_101_180_pp": 0.3387,
+        "pct_integer_H_inside_hadley_band": 70.0,
+        "max_pp_below_band_lo": 0.4624,
+        "max_pp_above_band_hi": 0.24,
+        "slowdown_pct_at_H_110": 0.16,
+        "slowdown_pct_at_H_145": 3.24,
+        "slowdown_pct_at_H_160": 5.76,
+        "weather_factor_at_H_145": 0.9676
+      },
+      "empirical": {
+        "corr_after_heat_vs_H_hot": -0.0401,
+        "corr_pre_weather_vs_H_hot": -0.0073,
+        "mean_slowdown_pct_when_hot": 1.1756,
+        "within_athlete_season_sd_ratio_mean": 0.9913
+      }
+    },
+    {
+      "k": 0.001642,
+      "is_deployed": false,
+      "is_hadley_ls": true,
+      "literature": {
+        "rmse_vs_band_midpoints_pp": 0.3221,
+        "rmse_vs_hadley_linear_101_180_pp": 0.32,
+        "pct_integer_H_inside_hadley_band": 72.5,
+        "max_pp_below_band_lo": 0.422,
+        "max_pp_above_band_hi": 0.5088,
+        "slowdown_pct_at_H_110": 0.1642,
+        "slowdown_pct_at_H_145": 3.3251,
+        "slowdown_pct_at_H_160": 5.9112,
+        "weather_factor_at_H_145": 0.96675
+      },
+      "empirical": {
+        "corr_after_heat_vs_H_hot": -0.0409,
+        "corr_pre_weather_vs_H_hot": -0.0073,
+        "mean_slowdown_pct_when_hot": 1.2065,
+        "within_athlete_season_sd_ratio_mean": 0.9914
+      }
+    },
+    {
+      "k": 0.0018,
+      "is_deployed": false,
+      "is_hadley_ls": false,
+      "literature": {
+        "rmse_vs_band_midpoints_pp": 0.5589,
+        "rmse_vs_hadley_linear_101_180_pp": 0.5684,
+        "pct_integer_H_inside_hadley_band": 68.8,
+        "max_pp_below_band_lo": 0.2822,
+        "max_pp_above_band_hi": 1.52,
+        "slowdown_pct_at_H_110": 0.18,
+        "slowdown_pct_at_H_145": 3.645,
+        "slowdown_pct_at_H_160": 6.48,
+        "weather_factor_at_H_145": 0.96355
+      },
+      "empirical": {
+        "corr_after_heat_vs_H_hot": -0.0442,
+        "corr_pre_weather_vs_H_hot": -0.0073,
+        "mean_slowdown_pct_when_hot": 1.3226,
+        "within_athlete_season_sd_ratio_mean": 0.9921
+      }
+    },
+    {
+      "k": 0.002,
+      "is_deployed": false,
+      "is_hadley_ls": false,
+      "literature": {
+        "rmse_vs_band_midpoints_pp": 1.0834,
+        "rmse_vs_hadley_linear_101_180_pp": 1.0988,
+        "pct_integer_H_inside_hadley_band": 55.0,
+        "max_pp_below_band_lo": 0.258,
+        "max_pp_above_band_hi": 2.8,
+        "slowdown_pct_at_H_110": 0.2,
+        "slowdown_pct_at_H_145": 4.05,
+        "slowdown_pct_at_H_160": 7.2,
+        "weather_factor_at_H_145": 0.9595
+      },
+      "empirical": {
+        "corr_after_heat_vs_H_hot": -0.0484,
+        "corr_pre_weather_vs_H_hot": -0.0073,
+        "mean_slowdown_pct_when_hot": 1.4695,
+        "within_athlete_season_sd_ratio_mean": 0.9933
+      }
+    }
+  ],
+  "ranking_by_hadley_linear_rmse": [
+    0.001642,
+    0.0016,
+    0.0015,
+    0.0018,
+    0.0014,
+    0.002,
+    0.0012
+  ],
+  "best_hadley_linear_rmse_k": 0.001642,
+  "deployed_vs_best": {
+    "deployed_k": 0.0015,
+    "best_k": 0.001642,
+    "same": false,
+    "linear_rmse_delta_pp": 0.1939
+  },
+  "k_0.0016_vs_deployed": {
+    "linear_rmse_improvement_pp": 0.1752,
+    "pct_H_in_band_gain": 11.2
+  },
+  "hadley_ls_vs_deployed": {
+    "hadley_ls_k": 0.001642,
+    "linear_rmse_improvement_pp": 0.1939,
+    "worth_switching_from_0.0015": true,
+    "note": "Hadley LS k measurably closer to piecewise linear reference."
+  },
+  "recommendation": "Best Hadley linear RMSE: k=0.001642 (0.32 pp). Deployed k=0.0015: 0.5139 pp. k=0.0016 vs 0.0015: 0.175 pp lower linear RMSE, 70% vs 59% of H in Hadley band \u2014 optional upgrade. Hadley LS optimum k\u22480.0016 is marginally better than both; difference from 0.0015/0.0016 is small for CIKM. Empirical r(adj,H) changes little across this grid; choose on Hadley fidelity."
+}

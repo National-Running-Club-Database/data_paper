@@ -1,0 +1,90 @@
+{
+  "n_xc_results_with_weather": 24081,
+  "n_hot_H_gt_100": 18705,
+  "heat_index_mean_when_hot": 123.83,
+  "piecewise_surrogate": {
+    "deployed_k": 0.0015,
+    "hadley_ls_k": 0.001642,
+    "rmse_vs_midpoints": 0.5216
+  },
+  "fitted_coefficients": {
+    "deployed_literature": 0.0015,
+    "hadley_ls_midpoints": 0.001642,
+    "naive_ols_log_preweather": null,
+    "within_athlete_season_median": 0.021749,
+    "match_hadley_mean_on_data": 0.003493,
+    "corr_minimization": 0.0005
+  },
+  "candidate_metrics": [
+    {
+      "label": "deployed_literature",
+      "k": 0.0015,
+      "hadley_linear_rmse_101_180": 0.5139,
+      "corr_pre_weather_vs_H_hot": -0.0073,
+      "corr_after_heat_vs_H_hot": -0.038,
+      "mean_slowdown_pct_when_hot": 1.1022,
+      "within_athlete_season_sd_ratio_mean": 0.991,
+      "n_athlete_seasons_sd_ratio": 3775
+    },
+    {
+      "label": "hadley_ls_midpoints",
+      "k": 0.001642,
+      "hadley_linear_rmse_101_180": 0.32,
+      "corr_pre_weather_vs_H_hot": -0.0073,
+      "corr_after_heat_vs_H_hot": -0.0409,
+      "mean_slowdown_pct_when_hot": 1.2064,
+      "within_athlete_season_sd_ratio_mean": 0.9914,
+      "n_athlete_seasons_sd_ratio": 3775
+    },
+    {
+      "label": "naive_ols_log_preweather",
+      "k": null,
+      "skipped": true
+    },
+    {
+      "label": "within_athlete_season_median",
+      "k": 0.021749,
+      "hadley_linear_rmse_101_180": 58.4595,
+      "corr_pre_weather_vs_H_hot": -0.0073,
+      "corr_after_heat_vs_H_hot": -0.462,
+      "mean_slowdown_pct_when_hot": 15.9803,
+      "within_athlete_season_sd_ratio_mean": 1.8189,
+      "n_athlete_seasons_sd_ratio": 3775
+    },
+    {
+      "label": "match_hadley_mean_on_data",
+      "k": 0.003493,
+      "hadley_linear_rmse_101_180": 5.4004,
+      "corr_pre_weather_vs_H_hot": -0.0073,
+      "corr_after_heat_vs_H_hot": -0.0797,
+      "mean_slowdown_pct_when_hot": 2.5665,
+      "within_athlete_season_sd_ratio_mean": 1.0137,
+      "n_athlete_seasons_sd_ratio": 3775
+    },
+    {
+      "label": "corr_minimization",
+      "k": 0.0005,
+      "hadley_linear_rmse_101_180": 3.3246,
+      "corr_pre_weather_vs_H_hot": -0.0073,
+      "corr_after_heat_vs_H_hot": -0.0175,
+      "mean_slowdown_pct_when_hot": 0.3674,
+      "within_athlete_season_sd_ratio_mean": 0.9942,
+      "n_athlete_seasons_sd_ratio": 3775
+    }
+  ],
+  "cikm_guidance": {
+    "recommendation": "keep_deployed_k",
+    "recommended_k": 0.0015,
+    "optional_literature_k": 0.001642,
+    "include_recalibration_in_paper": false,
+    "include_empirical_recalibration_appendix": false,
+    "rationale": [
+      "CIKM Resource track: treat heat as a documented operationalization of Hadley (Max Performance Running), not an NRCD-estimated physiological law.",
+      "Deployed k=0.0015; least-squares fit to Hadley band midpoints gives k\u22480.001642 (still literature-derived).",
+      "Data-driven fits are confounded: e.g. within_athlete_season_median yielded k=0.021749 (Hadley RMSE 58.4595), far from the coaching table.",
+      "Optional: round to k=0.0016 for slightly tighter band-midpoint fit; difference from 0.0015 is small and not worth a full recalibration narrative.",
+      "Do not report NRCD-recalibrated k in the main paper; cite Hadley + Equation (heat) + piecewise-fit table."
+    ]
+  },
+  "confounding_warning": "Empirical fits use pre-weather standardized times but still confound heat with unmeasured course hardness, team tactics, fitness trajectory within season, and scheduling (early-season races cluster on warmer dates). Prefer Hadley-grounded k for the resource paper."
+}
