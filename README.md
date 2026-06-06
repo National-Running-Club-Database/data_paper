@@ -1,67 +1,46 @@
-# Data Paper
+# NRCD resource paper & analysis
 
-Analysis code for the [National Running Club Database public dataset](https://github.com/National-Running-Club-Database/national_running_club_database_public_dataset): all NRCD **public, approved** release data with **PII removed** (not limited to cross country).
+CIKM resource paper and reproducible analysis scripts for the **National Running Club Database (NRCD)**.
 
-## Setup
-
-```bash
-python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-```
+The standalone **`nrcd` Python package** lives in [`nrcd_package/`](nrcd_package/) (for athletes/researchers standardizing their own data). Paper analysis uses `scripts/` and does not require running package tests.
 
 ## Data
 
-The upstream repo holds the organization’s full public approved export—anonymized tables for meets, athletes, teams, events, results, course details, and related fields across sports and event types. CSV files are not committed to this repo (`data/` is gitignored). Pull them from the public dataset repository into `data/`:
+Download CSV exports from Zenodo: **https://zenodo.org/records/17917357**
+
+Place files in `data/` (see `data/README.md`).
+
+## Paper
+
+- LaTeX: `papers/cikm.tex`
+- Build PDF: `paper_build/build_cikm.sh` → `paper_build/cikm.pdf`
+
+## Analysis (reproduce paper statistics)
 
 ```bash
-mkdir -p data
-
-# Shallow clone, copy CSVs, remove temp clone
-git clone --depth 1 \
-  https://github.com/National-Running-Club-Database/national_running_club_database_public_dataset.git \
-  .tmp_nrcd_dataset
-cp .tmp_nrcd_dataset/*.csv data/
-rm -rf .tmp_nrcd_dataset
+pip install -r requirements.txt
+python scripts/run_all.py --paper-only   # main paper numbers
 ```
 
-Expected files under `data/` (from the [dataset README](https://github.com/National-Running-Club-Database/national_running_club_database_public_dataset/blob/main/README.md)):
+Key scripts:
 
-| File | Description |
-|------|-------------|
-| `athlete.csv` | Athlete info (PII removed) |
-| `athlete_team_association.csv` | Athlete–team links |
-| `course_details.csv` | Course and weather |
-| `joined.csv` | Denormalized join of all tables |
-| `meet.csv` | Meet metadata |
-| `result.csv` | Individual race results |
-| `running_event.csv` | Event definitions |
-| `sport.csv` | Sport metadata |
-| `team.csv` | Team metadata |
+| Script | Purpose |
+|--------|---------|
+| `scripts/run_all.py` | Orchestrates validations and writes `results/dataset_stats.json` |
+| `scripts/load_data.py` | Merge approved CSV tables |
+| `scripts/standardization.py` | XC standardization pipeline (paper formulas) |
+| `scripts/validation_*.py` | Formula validation experiments |
 
-`scripts/utils.py` reads at least `result.csv`, `meet.csv`, `athlete.csv`, and `running_event.csv` from `data/`.
+Optional API backfill (`scripts/enrich_api.py`) requires the separate `nrcd` package: `pip install nrcd[apis]`.
 
-### Alternative: download individual files
+## Citation
 
-If you prefer not to clone the repo:
+> **NRCD: An Open Database of Collegiate Running with Unified Performance Standardization**  
+> Jonathan A. Karr Jr, Ryan M. Fryer, Ben Darden, Nicholas Pell, Kayla Ambrose, Evan Hall, Ramzi K. Bualuan, and Nitesh V. Chawla.  
+> arXiv preprint (forthcoming).
 
-```bash
-mkdir -p data
-BASE="https://raw.githubusercontent.com/National-Running-Club-Database/national_running_club_database_public_dataset/main"
-for f in athlete athlete_team_association course_details joined meet result running_event sport team; do
-  curl -fsSL -o "data/${f}.csv" "${BASE}/${f}.csv"
-done
-```
+Dataset: [Zenodo 17917357](https://zenodo.org/records/17917357)
 
-## Project layout
+---
 
-```
-data/              # CSVs (local only, not in git)
-scripts/
-  utils.py         # Time parsing, course lookup, data loading helpers
-requirements.txt
-```
-
-## Dataset citation
-
-When using this data, cite the [National Running Club Database public dataset](https://github.com/National-Running-Club-Database/national_running_club_database_public_dataset) and follow its usage terms (public approved release; PII removed). Contact and author details are listed in that repository’s README and on the [NRCD organization](https://github.com/National-Running-Club-Database).
+Repository by [Jonathan A. Karr Jr.](https://orcid.org/0009-0000-1600-6122) ([jkarr@nd.edu](mailto:jkarr@nd.edu)), with the help of [Cursor](https://cursor.com).
