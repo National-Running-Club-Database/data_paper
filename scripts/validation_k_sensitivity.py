@@ -6,50 +6,13 @@ import numpy as np
 import pandas as pd
 
 from config import HEAT_QUADRATIC_COEFF
-from standardization import converted_only_xc, standardize_xc_row
+from progress import iter_progress
+from standardization import compute_xc_times
 from validation_improvement import _median_improvement_by_gender
+from xc_frame import build_xc_frame
 
 
 DEFAULT_K_VALUES = (0.001, 0.0016, 0.002)
-
-
-def _xc_performance_records(tables: dict, heat_k: float, min_meets: int = 3) -> pd.DataFrame:
-    meet = tables["meet"]
-    result = tables["result"]
-    athlete = tables["athlete"]
-    running_event = tables["running_event"]
-    course_details = tables["course_details"]
-
-    xc_meets = set(meet.loc[meet["sport_id"] == 1, "meet_id"])
-    df = result[result["meet_id"].isin(xc_meets)].copy()
-    df = df.merge(athlete[["athlete_id", "gender"]], on="athlete_id")
-    df = df.merge(running_event, on="running_event_id")
-    from schema import meet_altitude_column
-
-    alt_col = meet_altitude_column(meet)
-    df = df.merge(
-        meet[["meet_id", "start_date", alt_col]].rename(columns={alt_col: "altitude"}),
-        on="meet_id",
-    )
-    df["season"] = pd.to_datetime(df["start_date"], errors="coerce").dt.year
-    nationals = meet.set_index("meet_id")["nationals"].astype(bool)
-    df = df[~df["meet_id"].map(nationals).fillna(False)]
-
-    records = []
-    for _, row in df.iterrows():
-        raw, std = standardize_xc_row(row, course_details, heat_k=heat_k)
-        if np.isfinite(raw) and np.isfinite(std):
-            records.append(
-                {
-                    "athlete_id": row["athlete_id"],
-                    "season": row["season"],
-                    "meet_id": row["meet_id"],
-                    "gender": row["gender"],
-                    "raw": raw,
-                    "standardized": std,
-                }
-            )
-    return pd.DataFrame(records).dropna(subset=["season"])
 
 
 def _variance_by_gender(perf: pd.DataFrame, min_meets: int) -> dict[str, dict]:
@@ -78,90 +41,16 @@ def _variance_by_gender(perf: pd.DataFrame, min_meets: int) -> dict[str, dict]:
     return out
 
 
-def _xc_improvements_k(tables: dict, heat_k: float) -> tuple[pd.DataFrame, pd.DataFrame]:
-    meet = tables["meet"]
-    result = tables["result"]
-    athlete = tables["athlete"]
-    running_event = tables["running_event"]
-    course_details = tables["course_details"]
-
-    xc_meets = set(
-        meet.loc[(meet["sport_id"] == 1) & (~meet["nationals"].astype(bool)), "meet_id"]
-    )
-    df = result[result["meet_id"].isin(xc_meets)].copy()
-    df = df.merge(athlete[["athlete_id", "gender"]], on="athlete_id")
-    df = df.merge(running_event, on="running_event_id")
-    from schema import meet_altitude_column
-
-    alt_col = meet_altitude_column(meet)
-    df = df.merge(
-        meet[["meet_id", "start_date", alt_col]].rename(columns={alt_col: "altitude"}),
-        on="meet_id",
-    )
-    df["race_date"] = pd.to_datetime(df["start_date"], errors="coerce")
-
-    conv_rows, std_rows = [], []
-    for _, row in df.iterrows():
-        conv = converted_only_xc(row, course_details)
-        _, std = standardize_xc_row(row, course_details, heat_k=heat_k)
-        if np.isfinite(conv):
-            conv_rows.append(
-                {
-                    "athlete_id": row["athlete_id"],
-                    "gender": row["gender"],
-                    "season": row["race_date"].year,
-                    "race_date": row["race_date"],
-                    "time": conv,
-                }
-            )
-        if np.isfinite(std):
-            std_rows.append(
-                {
-                    "athlete_id": row["athlete_id"],
-                    "gender": row["gender"],
-                    "season": row["race_date"].year,
-                    "race_date": row["race_date"],
-                    "time": std,
-                }
-            )
-    return (
-        pd.DataFrame(conv_rows).dropna(subset=["race_date"]),
-        pd.DataFrame(std_rows).dropna(subset=["race_date"]),
-    )
+def _performance_frame(timed: pd.DataFrame) -> pd.DataFrame:
+    perf = timed[np.isfinite(timed["raw_sec"]) & np.isfinite(timed["standardized_sec"])].copy()
+    perf = perf.rename(columns={"raw_sec": "raw", "standardized_sec": "standardized"})
+    return perf.dropna(subset=["season"])
 
 
-def _improvement_inflation(tables: dict, heat_k: float) -> dict[str, dict]:
-    conv, std = _xc_improvements_k(tables, heat_k)
-    by_mode = {
-        "converted_only": _median_improvement_by_gender(conv),
-        "fully_standardized": _median_improvement_by_gender(std),
-    }
-    conv_imp, std_imp = {}, {}
-    for df, store in ((conv, conv_imp), (std, std_imp)):
-        for (aid, season, gender), grp in df.groupby(["athlete_id", "season", "gender"]):
-            if len(grp) < 2:
-                continue
-            grp = grp.sort_values("race_date")
-            store[(aid, season, gender)] = float(
-                grp.iloc[0]["time"] - grp.iloc[1:]["time"].min()
-            )
-    out = {}
-    for gender, label in [("M", "men"), ("F", "women")]:
-        keys = [k for k in conv_imp if k[2] == gender and k in std_imp]
-        c_arr = np.array([conv_imp[k] for k in keys])
-        s_arr = np.array([std_imp[k] for k in keys])
-        c = by_mode["converted_only"][label]["median_improvement_sec"]
-        s = by_mode["fully_standardized"][label]["median_improvement_sec"]
-        if c is not None and s is not None and s > 0 and len(c_arr) > 0:
-            ratio = c / s
-            out[label] = {
-                "median_conv_sec": c,
-                "median_std_sec": s,
-                "pct_inflation_vs_full": round(100 * (ratio - 1), 0),
-            }
-        else:
-            out[label] = {}
-    return out
+def _standardized_improvement_frame(timed: pd.DataFrame) -> pd.DataFrame:
+    out = timed.loc[np.isfinite(timed["standardized_sec"])].copy()
+    out = out.rename(columns={"standardized_sec": "time"})
+    return out.dropna(subset=["race_date"])
 
 
 def k_sensitivity_summary(
@@ -171,13 +60,18 @@ def k_sensitivity_summary(
 ) -> dict:
     """Variance reduction and improvement inflation vs. heat k (converted-only unchanged)."""
     k_values = k_values or DEFAULT_K_VALUES
-    conv, _ = _xc_improvements_k(tables, heat_k=HEAT_QUADRATIC_COEFF)
-    conv_by_gender = _median_improvement_by_gender(conv)
+    base = build_xc_frame(tables, exclude_nationals=True)
+
+    timed_conv = compute_xc_times(base, heat_k=HEAT_QUADRATIC_COEFF)
+    conv = timed_conv.loc[np.isfinite(timed_conv["converted_sec"])].copy()
+    conv = conv.rename(columns={"converted_sec": "time"})
+    conv_by_gender = _median_improvement_by_gender(conv.dropna(subset=["race_date"]))
 
     by_k = []
-    for k in k_values:
-        perf = _xc_performance_records(tables, heat_k=k, min_meets=min_meets)
-        _, std = _xc_improvements_k(tables, heat_k=k)
+    for k in iter_progress(k_values, desc="k sensitivity", unit="k"):
+        timed = compute_xc_times(base, heat_k=k)
+        perf = _performance_frame(timed)
+        std = _standardized_improvement_frame(timed)
         std_by_gender = _median_improvement_by_gender(std)
         inflation = {}
         for label in ("men", "women"):

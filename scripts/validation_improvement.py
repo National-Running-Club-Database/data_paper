@@ -5,50 +5,21 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from standardization import converted_only_xc, standardize_xc_row
+from progress import iter_progress
+from standardization import compute_xc_times
+from xc_frame import build_xc_frame
 
 
-def _xc_improvements(tables: dict, mode: str) -> pd.DataFrame:
-    meet = tables["meet"]
-    result = tables["result"]
-    athlete = tables["athlete"]
-    running_event = tables["running_event"]
-    course_details = tables["course_details"]
+def _improvement_times(tables: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Return (converted-only, standardized) athlete-season race clocks in one pass."""
+    timed = compute_xc_times(build_xc_frame(tables, exclude_nationals=True))
+    base_cols = ["athlete_id", "gender", "season", "race_date", "meet_id"]
 
-    xc_meets = set(
-        meet.loc[(meet["sport_id"] == 1) & (~meet["nationals"].astype(bool)), "meet_id"]
-    )
-    df = result[result["meet_id"].isin(xc_meets)].copy()
-    df = df.merge(athlete[["athlete_id", "gender"]], on="athlete_id")
-    df = df.merge(running_event, on="running_event_id")
-    from schema import meet_altitude_column
+    def _time_frame(col: str) -> pd.DataFrame:
+        out = timed.loc[np.isfinite(timed[col]), base_cols + [col]].copy()
+        return out.rename(columns={col: "time"}).dropna(subset=["race_date"])
 
-    alt_col = meet_altitude_column(meet)
-    df = df.merge(
-        meet[["meet_id", "start_date", alt_col]].rename(columns={alt_col: "altitude"}),
-        on="meet_id",
-    )
-    df["race_date"] = pd.to_datetime(df["start_date"], errors="coerce")
-
-    rows = []
-    for _, row in df.iterrows():
-        if mode == "standardized":
-            _, t = standardize_xc_row(row, course_details)
-        elif mode == "converted":
-            t = converted_only_xc(row, course_details)
-        else:
-            raise ValueError(mode)
-        if np.isfinite(t):
-            rows.append(
-                {
-                    "athlete_id": row["athlete_id"],
-                    "gender": row["gender"],
-                    "season": row["race_date"].year,
-                    "race_date": row["race_date"],
-                    "time": t,
-                }
-            )
-    return pd.DataFrame(rows).dropna(subset=["race_date"])
+    return _time_frame("converted_sec"), _time_frame("standardized_sec")
 
 
 def _improvement_frame(perf: pd.DataFrame) -> pd.DataFrame:
@@ -72,7 +43,7 @@ def _bootstrap_median_ci(
     rng = np.random.default_rng(seed)
     meds = []
     n = len(values)
-    for _ in range(n_boot):
+    for _ in iter_progress(range(n_boot), desc="Bootstrap median", unit="rep", leave=False):
         sample = values[rng.integers(0, n, size=n)]
         meds.append(float(np.median(sample)))
     meds_arr = np.array(meds)
@@ -111,7 +82,7 @@ def _bootstrap_ratio_ci(
     rng = np.random.default_rng(seed)
     n = len(conv)
     ratios = []
-    for _ in range(n_boot):
+    for _ in iter_progress(range(n_boot), desc="Bootstrap ratio", unit="rep", leave=False):
         idx = rng.integers(0, n, size=n)
         c_med = float(np.median(conv[idx]))
         s_med = float(np.median(std[idx]))
@@ -124,8 +95,7 @@ def _bootstrap_ratio_ci(
 
 def improvement_summary(tables: dict) -> dict:
     """Compare within-season improvement under converted-only vs full standardization."""
-    conv = _xc_improvements(tables, "converted")
-    std = _xc_improvements(tables, "standardized")
+    conv, std = _improvement_times(tables)
     by_mode = {
         "converted_only": _median_improvement_by_gender(conv, bootstrap=True),
         "fully_standardized": _median_improvement_by_gender(std, bootstrap=True),

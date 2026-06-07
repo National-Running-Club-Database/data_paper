@@ -37,48 +37,72 @@
   "missing_files": [],
   "load_ok": true,
   "composition": {
-    "total_results": 129603,
-    "total_athletes": 30656,
-    "total_meets": 1361,
+    "total_results": 128963,
+    "total_athletes": 28913,
+    "roster_athletes": 29609,
+    "total_meets": 1336,
     "total_teams": 187,
-    "course_detail_records": 768,
-    "athlete_team_associations": 30666,
+    "course_detail_records": 939,
+    "athlete_team_associations": 29618,
     "by_sport": [
       {
         "sport_name": "Cross Country",
-        "results": 70641,
-        "athletes": 22242,
+        "results": 70285,
+        "athletes": 21630,
         "meets": 524
       },
       {
         "sport_name": "Indoor Track",
-        "results": 23007,
-        "athletes": 7438,
-        "meets": 328
+        "results": 22809,
+        "athletes": 7207,
+        "meets": 326
       },
       {
         "sport_name": "Outdoor Track",
-        "results": 33773,
-        "athletes": 9745,
-        "meets": 431
+        "results": 33689,
+        "athletes": 9607,
+        "meets": 428
       },
       {
         "sport_name": "Road Race",
-        "results": 2182,
-        "athletes": 1633,
-        "meets": 59
+        "results": 2180,
+        "athletes": 1627,
+        "meets": 58
       }
     ],
     "results_by_era": {
-      "comprehensive": 64835,
-      "historical": 64768
+      "comprehensive": 64209,
+      "historical": 64754
     },
     "gender_athletes": {
-      "F": 11683,
-      "M": 18243
+      "F": 11381,
+      "M": 17532
     },
     "date_min": "2004-04-09",
-    "date_max": "2026-05-01"
+    "date_max": "2026-05-01",
+    "athlete_sport_overlap": {
+      "athletes_with_results": 28913,
+      "per_sport_athlete_sum": 40071,
+      "single_sport": 20553,
+      "multi_sport": 8360,
+      "multi_sport_pct": 28.9,
+      "three_plus_sports": 2533,
+      "four_sports": 265,
+      "by_num_sports": {
+        "1": 20553,
+        "2": 5827,
+        "3": 2268,
+        "4": 265
+      },
+      "pairwise": {
+        "Cross Country|Indoor Track": 3498,
+        "Cross Country|Outdoor Track": 4798,
+        "Cross Country|Road Race": 1197,
+        "Indoor Track|Outdoor Track": 3760,
+        "Indoor Track|Road Race": 395,
+        "Outdoor Track|Road Race": 573
+      }
+    }
   },
   "urls": {
     "zenodo": "https://zenodo.org/records/17917357",
@@ -87,7 +111,7 @@
   },
   "local_docs": {
     "root_readme": true,
-    "datasheet_md": true,
+    "datasheet_md": false,
     "results_dataset_stats": true
   },
   "fair_summary": {

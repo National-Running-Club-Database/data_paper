@@ -12,7 +12,7 @@ from altitude import (
     sea_level_time_seconds,
 )
 from config import HEAT_QUADRATIC_COEFF, TRACK_OUTDOOR_REFERENCE_LAP_M, WIND_MAX_APPLY_MPS
-from events import applies_altitude_conversion, event_category
+from events import applies_altitude_conversion, event_category, parse_event_distance_m
 from schema import meet_altitude_ft_from_record
 from track_index import ncaa_index_multiplier, oversized_to_flat_multiplier
 from wind_index import wind_delta_seconds_at_speed
@@ -402,21 +402,5 @@ def adjust_time_for_race(
 
 
 def get_event_dist(event_name):
-    if pd.isna(event_name) or event_name is None:
-        return None
-    event_name = str(event_name)
-    lower = event_name.lower()
-    if event_name.endswith("m"):
-        return float(event_name.replace("m", "").strip())
-    m = re.search(r"(\d+(?:\.\d+)?)\s*m", event_name, re.I)
-    if m:
-        return float(m.group(1))
-    if lower in ("mile", "1 mile", "1600m"):
-        return 1609.34
-    if lower == "4 mile":
-        return 4 * 1609.34
-    if lower == "5 mile":
-        return 5 * 1609.34
-    if lower == "2 mile":
-        return 2 * 1609.34
-    return None
+    """Event distance in meters (alias for :func:`events.parse_event_distance_m`)."""
+    return parse_event_distance_m(event_name)

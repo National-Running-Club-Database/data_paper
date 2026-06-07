@@ -1,6 +1,6 @@
 """Gender-stratified R²: converted-only vs full standardization (train 2023, test 2024).
 
-Mirrors the illustrative random-forest check cited in the CIKM paper (companion XC analysis).
+Illustrative checks cited in the CIKM paper (RF + gradient boosting on season features).
 """
 
 from __future__ import annotations
@@ -8,10 +8,11 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import Callable
 
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import HistGradientBoostingRegressor, RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from sklearn.preprocessing import LabelEncoder
@@ -20,8 +21,10 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 
-from load_data import build_results_frame, load_tables
-from standardization import converted_only_xc, standardize_xc_row
+from load_data import load_tables
+from progress import iter_progress
+from standardization import compute_xc_times
+from xc_frame import build_xc_frame
 
 FEATURE_COLUMNS = [
     "gender_encoded",
@@ -55,36 +58,29 @@ FEATURE_COLUMNS = [
     "bad_race_count",
 ]
 
+MODEL_BUILDERS: dict[str, Callable[[], object]] = {
+    "random_forest": lambda: RandomForestRegressor(
+        n_estimators=100, random_state=42, n_jobs=-1
+    ),
+    "gradient_boosting": lambda: HistGradientBoostingRegressor(random_state=42),
+}
 
-def _xc_race_frame(tables: dict, mode: str) -> pd.DataFrame:
-    df = build_results_frame(tables)
-    meet = tables["meet"]
-    df = df[df["sport_name"] == "Cross Country"].copy()
-    nationals = meet.set_index("meet_id")["nationals"].astype(bool)
-    df = df[~df["meet_id"].map(nationals).fillna(False)]
-    df = df[df["event_category"] == "distance"]
 
-    rows = []
-    cd = tables["course_details"]
-    for _, row in df.iterrows():
-        if mode == "standardized":
-            _, t = standardize_xc_row(row, cd)
-        elif mode == "converted":
-            t = converted_only_xc(row, cd)
-        else:
-            raise ValueError(mode)
-        if np.isfinite(t):
-            rows.append(
-                {
-                    "athlete_id": row["athlete_id"],
-                    "gender": row["gender"],
-                    "start_date": row["meet_date"],
-                    "standardized_to_target": t,
-                }
-            )
-    out = pd.DataFrame(rows)
-    out["start_date"] = pd.to_datetime(out["start_date"], errors="coerce")
-    return out.dropna(subset=["start_date", "gender"])
+def _xc_race_frames(
+    tables: dict, *, progress_disable: bool = False
+) -> dict[str, pd.DataFrame]:
+    """Build converted and standardized XC race frames in one standardization pass."""
+    base = build_xc_frame(tables, exclude_nationals=True)
+    base = base[base["event_category"] == "distance"].copy()
+    timed = compute_xc_times(base)
+    cols = ["athlete_id", "gender", "race_date"]
+
+    frames = {}
+    for mode, col in (("converted", "converted_sec"), ("standardized", "standardized_sec")):
+        out = timed.loc[np.isfinite(timed[col]), cols + [col]].copy()
+        out = out.rename(columns={col: "standardized_to_target", "race_date": "start_date"})
+        frames[mode] = out.dropna(subset=["start_date", "gender"])
+    return frames
 
 
 def _athlete_features(df: pd.DataFrame, training_df: pd.DataFrame | None = None) -> pd.DataFrame:
@@ -224,8 +220,13 @@ def _prepare_xy(features_df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series, pd.
     return X.loc[mask], y.loc[mask], filt
 
 
-def r2_for_mode_gender(tables: dict, mode: str, gender: str) -> dict:
-    df = _xc_race_frame(tables, mode)
+def _fit_predict_r2(
+    model_builder: Callable[[], object],
+    race_frames: dict[str, pd.DataFrame],
+    mode: str,
+    gender: str,
+) -> dict:
+    df = race_frames[mode].copy()
     df["year"] = df["start_date"].dt.year
     training = df[df["year"] == 2023]
     athlete_df = _athlete_features(df, training_df=training)
@@ -236,7 +237,7 @@ def r2_for_mode_gender(tables: dict, mode: str, gender: str) -> dict:
     test = gmask & (filt["year"] == 2024)
     if train.sum() < 50 or test.sum() < 50:
         return {"r2": None, "train_n": int(train.sum()), "test_n": int(test.sum())}
-    model = RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1)
+    model = model_builder()
     model.fit(X.loc[train], y.loc[train])
     pred = model.predict(X.loc[test])
     return {
@@ -246,14 +247,97 @@ def r2_for_mode_gender(tables: dict, mode: str, gender: str) -> dict:
     }
 
 
-def main() -> None:
+def _bootstrap_r2_diff_ci(
+    model_builder: Callable[[], object],
+    race_frames: dict[str, pd.DataFrame],
+    gender: str,
+    *,
+    n_boot: int = 2000,
+    seed: int = 0,
+) -> dict:
+    """Bootstrap 95% CIs for R² and converted−standardized difference on test set."""
+    preds: dict[str, tuple[np.ndarray, np.ndarray]] = {}
+    for mode in ("converted", "standardized"):
+        df = race_frames[mode].copy()
+        df["year"] = df["start_date"].dt.year
+        training = df[df["year"] == 2023]
+        athlete_df = _athlete_features(df, training_df=training)
+        features_df = _advanced_features(athlete_df)
+        X, y, filt = _prepare_xy(features_df)
+        gmask = filt["gender"] == gender
+        train = gmask & (filt["year"] == 2023)
+        test = gmask & (filt["year"] == 2024)
+        if train.sum() < 50 or test.sum() < 50:
+            return {"bootstrap_replicates": n_boot}
+        model = model_builder()
+        model.fit(X.loc[train], y.loc[train])
+        preds[mode] = (y.loc[test].values, model.predict(X.loc[test]))
+
+    y_c, p_c = preds["converted"]
+    y_s, p_s = preds["standardized"]
+    rng = np.random.default_rng(seed)
+    n = len(y_c)
+    r2_c_vals, r2_s_vals, diffs = [], [], []
+    for _ in range(n_boot):
+        idx = rng.integers(0, n, n)
+        r2_c = r2_score(y_c[idx], p_c[idx])
+        r2_s = r2_score(y_s[idx], p_s[idx])
+        r2_c_vals.append(r2_c)
+        r2_s_vals.append(r2_s)
+        diffs.append(r2_c - r2_s)
+
+    def ci(vals: list[float]) -> dict[str, float]:
+        lo, hi = np.percentile(vals, [2.5, 97.5])
+        return {"lo": round(float(lo), 3), "hi": round(float(hi), 3)}
+
+    return {
+        "bootstrap_replicates": n_boot,
+        "converted_only_r2_ci95": ci(r2_c_vals),
+        "standardized_r2_ci95": ci(r2_s_vals),
+        "r2_diff_conv_minus_std_ci95": ci(diffs),
+    }
+
+
+def r2_for_mode_gender(
+    race_frames: dict[str, pd.DataFrame],
+    mode: str,
+    gender: str,
+    *,
+    model_name: str = "random_forest",
+) -> dict:
+    return _fit_predict_r2(MODEL_BUILDERS[model_name], race_frames, mode, gender)
+
+
+def main(*, progress_disable: bool = False, bootstrap: bool = True) -> None:
     tables = load_tables()
-    out = {}
-    for gender, label in [("M", "men"), ("F", "women")]:
-        out[label] = {
-            "converted_only": r2_for_mode_gender(tables, "converted", gender),
-            "standardized": r2_for_mode_gender(tables, "standardized", gender),
-        }
+    race_frames = _xc_race_frames(tables, progress_disable=progress_disable)
+    out: dict = {}
+    tasks = [
+        (model_name, gender_code, gender_label, mode)
+        for model_name in MODEL_BUILDERS
+        for gender_code, gender_label in (("M", "men"), ("F", "women"))
+        for mode in ("converted", "standardized")
+    ]
+    for model_name, gender_code, gender_label, mode in iter_progress(
+        tasks, desc="ML R²", unit="model", disable=progress_disable
+    ):
+        out.setdefault(model_name, {}).setdefault(gender_label, {})
+        key = f"{mode}_only" if mode == "converted" else mode
+        out[model_name][gender_label][key] = r2_for_mode_gender(
+            race_frames, mode, gender_code, model_name=model_name
+        )
+
+    if bootstrap:
+        for model_name in MODEL_BUILDERS:
+            for gender_code, gender_label in (("M", "men"), ("F", "women")):
+                out[model_name][gender_label]["bootstrap"] = _bootstrap_r2_diff_ci(
+                    MODEL_BUILDERS[model_name], race_frames, gender_code
+                )
+
+    # Legacy flat layout (random forest only) for older consumers.
+    out["men"] = out["random_forest"]["men"]
+    out["women"] = out["random_forest"]["women"]
+
     path = ROOT / "results" / "ml_standardization_r2.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, indent=2) + "\n")

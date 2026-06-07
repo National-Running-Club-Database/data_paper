@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import re
 
 
@@ -50,6 +51,8 @@ def event_category(event_name: str) -> str:
 def parse_event_distance_m(event_name: str | None) -> float | None:
     """Distance in meters from event label (e.g. ``8000m``, ``110m Hurdles``)."""
     if event_name is None:
+        return None
+    if isinstance(event_name, float) and not math.isfinite(event_name):
         return None
     event_name = str(event_name)
     lower = event_name.lower()

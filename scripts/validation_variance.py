@@ -5,50 +5,24 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from standardization import converted_only_xc, standardize_xc_row
-from utils import parse_time
+from standardization import compute_xc_times
+from xc_frame import build_xc_frame
 
 
 def within_athlete_variance(tables: dict, min_races: int = 3) -> dict:
-    meet = tables["meet"]
-    result = tables["result"]
-    athlete = tables["athlete"]
-    running_event = tables["running_event"]
-    course_details = tables["course_details"]
-
-    xc_meets = set(meet.loc[meet["sport_id"] == 1, "meet_id"])
-    df = result[result["meet_id"].isin(xc_meets)].copy()
-    df = df.merge(athlete[["athlete_id", "gender"]], on="athlete_id")
-    df = df.merge(running_event, on="running_event_id")
-    from schema import meet_altitude_column
-
-    alt_col = meet_altitude_column(meet)
-    df = df.merge(
-        meet[["meet_id", "start_date", alt_col]].rename(columns={alt_col: "altitude"}),
-        on="meet_id",
+    timed = compute_xc_times(build_xc_frame(tables, exclude_nationals=True))
+    perf = timed[
+        np.isfinite(timed["raw_sec"]) & np.isfinite(timed["standardized_sec"])
+    ].copy()
+    perf = perf.rename(
+        columns={
+            "raw_sec": "raw",
+            "standardized_sec": "standardized",
+            "converted_sec": "converted_only",
+        }
     )
-    df["season"] = pd.to_datetime(df["start_date"], errors="coerce").dt.year
-    nationals = meet.set_index("meet_id")["nationals"].astype(bool)
-    df = df[~df["meet_id"].map(nationals).fillna(False)]
+    perf = perf.dropna(subset=["season"])
 
-    records = []
-    for _, row in df.iterrows():
-        raw, std = standardize_xc_row(row, course_details)
-        conv = converted_only_xc(row, course_details)
-        if np.isfinite(raw) and np.isfinite(std):
-            records.append(
-                {
-                    "athlete_id": row["athlete_id"],
-                    "season": row["season"],
-                    "meet_id": row["meet_id"],
-                    "gender": row["gender"],
-                    "raw": raw,
-                    "standardized": std,
-                    "converted_only": conv,
-                }
-            )
-
-    perf = pd.DataFrame(records).dropna(subset=["season"])
     rows_out = []
     all_season_stats = []
     for gender in ["M", "F"]:

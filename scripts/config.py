@@ -22,6 +22,9 @@ RIEGEL_B_WOMEN = 1.08  # Riegel (1981) table; unified 1.06 in blythe2016predicti
 XC_TARGET_M = 8000.0
 XC_TARGET_F = 6000.0
 
+# Maurer grade conversion: need plausible course length (m); skip below this
+MIN_ELEVATION_GRADE_DISTANCE_M = 500.0
+
 # Quadratic fit to Hadley temp+dew bands: slowdown (%) = k * (H - 100)^2, f = 1 - slowdown/100
 # Rounded from least-squares fit (0.001642) to Hadley band midpoints; see heat_compare_k.py
 HEAT_QUADRATIC_COEFF = 0.0016

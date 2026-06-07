@@ -6,8 +6,9 @@ import numpy as np
 import pandas as pd
 
 from heat_hadley import validate_piecewise_to_quadratic
-from standardization import heat_index, weather_factor
-from utils import get_course_details, parse_time
+from standardization import _weather_factor_array, weather_factor
+from utils import parse_time
+from xc_frame import attach_course_details, prepare_xc_results
 
 
 def validate_heat_adjustment(tables: dict) -> dict:
@@ -17,13 +18,6 @@ def validate_heat_adjustment(tables: dict) -> dict:
     2. Factor strictly decreases (more cooling) as H increases above 100.
     3. On XC results with weather metadata: |corr(time, H)| > |corr(adjusted_time, H)|.
     """
-    course_details = tables["course_details"]
-    meet = tables["meet"]
-    result = tables["result"]
-    athlete = tables["athlete"]
-    running_event = tables["running_event"]
-
-    # --- Unit checks on formula ---
     unit = {
         "at_100": weather_factor(70, 30),
         "at_110": round(weather_factor(80, 30), 6),
@@ -31,32 +25,32 @@ def validate_heat_adjustment(tables: dict) -> dict:
         "monotone_above_100": True,
     }
     hs = list(range(101, 131))
-    factors = [weather_factor(h / 2, h / 2) for h in hs]  # temp=dew -> H=temp+dew
+    factors = [weather_factor(h / 2, h / 2) for h in hs]
     unit["monotone_above_100"] = bool(
         all(factors[i] > factors[i + 1] for i in range(len(factors) - 1))
     )
 
-    # --- Empirical: XC with temp & dew ---
-    xc_meets = set(meet.loc[meet["sport_id"] == 1, "meet_id"])
-    df = result[result["meet_id"].isin(xc_meets)].copy()
-    df = df.merge(athlete[["athlete_id", "gender"]], on="athlete_id")
-    df = df.merge(running_event, on="running_event_id")
+    df = attach_course_details(
+        prepare_xc_results(tables, exclude_nationals=False),
+        tables["course_details"],
+    )
+    df["raw_sec"] = df["result_time"].map(parse_time)
+    has_w = (
+        df["raw_sec"].map(np.isfinite)
+        & df.get("cd_temperature", pd.Series(index=df.index)).notna()
+        & df.get("cd_dew_point", pd.Series(index=df.index)).notna()
+    )
+    sub = df.loc[has_w].copy()
+    if len(sub) == 0:
+        return {"unit_tests": unit, "empirical": {"n": 0, "skipped": "insufficient data"}}
 
-    rows = []
-    for _, row in df.iterrows():
-        raw = parse_time(row["result_time"])
-        if not np.isfinite(raw):
-            continue
-        cd = get_course_details(row, course_details)
-        t, d = cd.get("temperature"), cd.get("dew_point")
-        h = heat_index(t, d)
-        if h is None:
-            continue
-        wf = weather_factor(t, d)
-        adj = raw * wf
-        rows.append({"raw_sec": raw, "heat_index": h, "weather_factor": wf, "heat_adjusted_sec": adj})
+    temp = sub["cd_temperature"].to_numpy(dtype=float)
+    dew = sub["cd_dew_point"].to_numpy(dtype=float)
+    sub["heat_index"] = temp + dew
+    sub["weather_factor"] = _weather_factor_array(temp, dew)
+    sub["heat_adjusted_sec"] = sub["raw_sec"].to_numpy(dtype=float) * sub["weather_factor"].to_numpy(dtype=float)
+    emp = sub
 
-    emp = pd.DataFrame(rows)
     if len(emp) < 100:
         return {"unit_tests": unit, "empirical": {"n": len(emp), "skipped": "insufficient data"}}
 
@@ -95,7 +89,6 @@ def validate_heat_adjustment(tables: dict) -> dict:
         "corr_adj_hot_subset": round(corr_adj_hot, 4) if corr_adj_hot is not None and pd.notna(corr_adj_hot) else None,
         "corr_reduced_overall": corr_reduced_overall,
         "corr_reduced_hot_subset": corr_reduced_hot,
-        # Correlation can be confounded by distance mix; require hot-race median reduction.
         "validation_passed": bool(hot_median_faster),
     }
 

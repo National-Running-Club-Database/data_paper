@@ -20,9 +20,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from config import RESULTS
 from load_data import load_tables
+from progress import iter_progress
 from standardization import (
     converted_only_xc,
-    elevation_factor,
+    elevation_factor_from_metadata,
     heat_index,
     standardize_xc_row,
     weather_factor,
@@ -53,7 +54,9 @@ def _xc_performance_frame(tables: dict, min_meets: int = 3) -> pd.DataFrame:
     df = df[~df["meet_id"].map(nationals).fillna(False)]
 
     rows = []
-    for _, row in df.iterrows():
+    for _, row in iter_progress(
+        df.iterrows(), desc="Variance asymmetry", total=len(df), unit="row", leave=False
+    ):
         raw = parse_time(row["result_time"])
         if not np.isfinite(raw):
             continue
@@ -72,7 +75,9 @@ def _xc_performance_frame(tables: dict, min_meets: int = 3) -> pd.DataFrame:
         h = heat_index(cd.get("temperature"), cd.get("dew_point"))
         wf = weather_factor(cd.get("temperature"), cd.get("dew_point"))
         gain, loss = cd.get("elevation_gain"), cd.get("elevation_loss")
-        ef = elevation_factor(gain, loss)
+        ef = elevation_factor_from_metadata(
+            gain, loss, distance_m=d_act, d_reported=d_rep
+        )
         has_weather = h is not None and np.isfinite(h)
 
         rows.append(
