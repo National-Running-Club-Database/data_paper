@@ -1,6 +1,6 @@
 """Gender-stratified R²: converted-only vs full standardization (train 2023, test 2024).
 
-Illustrative checks cited in the CIKM paper (RF + gradient boosting on season features).
+Illustrative random forest and gradient boosting models on season-level features.
 """
 
 from __future__ import annotations
@@ -73,22 +73,29 @@ def _xc_race_frames(
     base = build_xc_frame(tables, exclude_nationals=True)
     base = base[base["event_category"] == "distance"].copy()
     timed = compute_xc_times(base)
-    cols = ["athlete_id", "gender", "race_date"]
+    cols = ["athlete_id", "gender", "race_date", "meet_id"]
 
     frames = {}
     for mode, col in (("converted", "converted_sec"), ("standardized", "standardized_sec")):
         out = timed.loc[np.isfinite(timed[col]), cols + [col]].copy()
         out = out.rename(columns={col: "standardized_to_target", "race_date": "start_date"})
-        frames[mode] = out.dropna(subset=["start_date", "gender"])
+        frames[mode] = out.dropna(subset=["start_date", "gender", "meet_id"])
     return frames
 
 
-def _athlete_features(df: pd.DataFrame, training_df: pd.DataFrame | None = None) -> pd.DataFrame:
+def _athlete_features(
+    df: pd.DataFrame,
+    training_df: pd.DataFrame | None = None,
+    *,
+    exclude_meet_ids: set[int] | None = None,
+) -> pd.DataFrame:
     percentile_df = training_df if training_df is not None else df
     records = []
 
     for athlete_id, athlete_races in df.groupby("athlete_id"):
         athlete_races = athlete_races.sort_values("start_date")
+        if exclude_meet_ids:
+            athlete_races = athlete_races[~athlete_races["meet_id"].isin(exclude_meet_ids)]
         if len(athlete_races) < 2:
             continue
 
@@ -308,6 +315,65 @@ def r2_for_mode_gender(
     return _fit_predict_r2(MODEL_BUILDERS[model_name], race_frames, mode, gender)
 
 
+def _temporal_r2_meet_redacted_features(
+    model_builder: Callable[[], object],
+    race_frames: dict[str, pd.DataFrame],
+    mode: str,
+    gender: str,
+    held_out_meets: set[int],
+) -> dict:
+    """Train 2023 / test 2024, but build 2024 test features excluding held-out meets."""
+    df = race_frames[mode].copy()
+    df["year"] = df["start_date"].dt.year
+    training = df[df["year"] == 2023]
+    athlete_df = _athlete_features(df, training_df=training, exclude_meet_ids=held_out_meets)
+    features_df = _advanced_features(athlete_df)
+    X, y, filt = _prepare_xy(features_df)
+    gmask = filt["gender"] == gender
+    train = gmask & (filt["year"] == 2023)
+    test = gmask & (filt["year"] == 2024)
+    if train.sum() < 50 or test.sum() < 50:
+        return {"r2": None, "train_n": int(train.sum()), "test_n": int(test.sum())}
+    model = model_builder()
+    model.fit(X.loc[train], y.loc[train])
+    pred = model.predict(X.loc[test])
+    return {
+        "r2": round(float(r2_score(y.loc[test], pred)), 3),
+        "train_n": int(train.sum()),
+        "test_n": int(test.sum()),
+    }
+
+
+def meet_holdout_summary(race_frames: dict[str, pd.DataFrame]) -> dict:
+    """Temporal split with 25% of 2024 meets removed from test-year feature construction."""
+    df = race_frames["converted"]
+    meets_2024 = df.loc[df["start_date"].dt.year == 2024, "meet_id"].unique()
+    if len(meets_2024) < 4:
+        return {"protocol": "temporal_with_meet_redacted_test_features", "n_held_out_meets": 0}
+    rng = np.random.default_rng(42)
+    n_hold = max(1, int(len(meets_2024) * 0.25))
+    held_out = set(int(x) for x in rng.choice(meets_2024, size=n_hold, replace=False))
+
+    out: dict = {
+        "protocol": "temporal_train_2023_test_2024_features_exclude_25pct_meets",
+        "held_out_meet_fraction": 0.25,
+        "n_held_out_meets": len(held_out),
+        "random_forest": {},
+    }
+    for gender_code, gender_label in (("M", "men"), ("F", "women")):
+        out["random_forest"][gender_label] = {}
+        for mode in ("converted", "standardized"):
+            key = f"{mode}_only" if mode == "converted" else mode
+            out["random_forest"][gender_label][key] = _temporal_r2_meet_redacted_features(
+                MODEL_BUILDERS["random_forest"], race_frames, mode, gender_code, held_out
+            )
+        c = out["random_forest"][gender_label]["converted_only"]["r2"]
+        s = out["random_forest"][gender_label]["standardized"]["r2"]
+        if c is not None and s is not None:
+            out["random_forest"][gender_label]["delta_r2_conv_minus_std"] = round(c - s, 3)
+    return out
+
+
 def main(*, progress_disable: bool = False, bootstrap: bool = True) -> None:
     tables = load_tables()
     race_frames = _xc_race_frames(tables, progress_disable=progress_disable)
@@ -337,6 +403,7 @@ def main(*, progress_disable: bool = False, bootstrap: bool = True) -> None:
     # Legacy flat layout (random forest only) for older consumers.
     out["men"] = out["random_forest"]["men"]
     out["women"] = out["random_forest"]["women"]
+    out["meet_holdout_2024"] = meet_holdout_summary(race_frames)
 
     path = ROOT / "results" / "ml_standardization_r2.json"
     path.parent.mkdir(parents=True, exist_ok=True)

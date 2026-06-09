@@ -10,14 +10,20 @@ from standardization import compute_xc_times
 from xc_frame import build_xc_frame
 
 
-def _improvement_times(tables: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+def _improvement_times(
+    tables: dict, *, min_races: int = 1
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Return (converted-only, standardized) athlete-season race clocks in one pass."""
     timed = compute_xc_times(build_xc_frame(tables, exclude_nationals=True))
     base_cols = ["athlete_id", "gender", "season", "race_date", "meet_id"]
 
     def _time_frame(col: str) -> pd.DataFrame:
         out = timed.loc[np.isfinite(timed[col]), base_cols + [col]].copy()
-        return out.rename(columns={col: "time"}).dropna(subset=["race_date"])
+        out = out.rename(columns={col: "time"}).dropna(subset=["race_date"])
+        if min_races > 1:
+            counts = out.groupby(["athlete_id", "season", "gender"])["time"].transform("size")
+            out = out[counts >= min_races]
+        return out
 
     return _time_frame("converted_sec"), _time_frame("standardized_sec")
 
@@ -93,9 +99,9 @@ def _bootstrap_ratio_ci(
     return point, float(np.percentile(ratios_arr, 2.5)), float(np.percentile(ratios_arr, 97.5))
 
 
-def improvement_summary(tables: dict) -> dict:
+def improvement_summary(tables: dict, *, min_races: int = 2) -> dict:
     """Compare within-season improvement under converted-only vs full standardization."""
-    conv, std = _improvement_times(tables)
+    conv, std = _improvement_times(tables, min_races=min_races)
     by_mode = {
         "converted_only": _median_improvement_by_gender(conv, bootstrap=True),
         "fully_standardized": _median_improvement_by_gender(std, bootstrap=True),
@@ -137,9 +143,25 @@ def improvement_summary(tables: dict) -> dict:
             inflation[label] = None
             ratio_ci[label] = None
 
+    pct_positive = {
+        "converted_only": _pct_positive_improvement(conv),
+        "fully_standardized": _pct_positive_improvement(std),
+    }
+
     return {
         "by_mode": by_mode,
         "converted_inflation_vs_standardized": inflation,
         "ratio_bootstrap_ci95": ratio_ci,
+        "pct_positive_improvement": pct_positive,
         "bootstrap_replicates": 2000,
     }
+
+
+def _pct_positive_improvement(perf: pd.DataFrame) -> dict[str, float | None]:
+    """Share of athlete-seasons with positive improvement (faster later)."""
+    imp = _improvement_frame(perf)
+    out: dict[str, float | None] = {}
+    for gender, label in [("M", "men"), ("F", "women")]:
+        vals = imp.loc[imp["gender"] == gender, "improvement_sec"]
+        out[label] = round(100.0 * (vals > 0).mean(), 1) if len(vals) else None
+    return out

@@ -164,5 +164,38 @@
         "hi": 0.051
       }
     }
+  },
+  "meet_holdout_2024": {
+    "protocol": "temporal_train_2023_test_2024_features_exclude_25pct_meets",
+    "held_out_meet_fraction": 0.25,
+    "n_held_out_meets": 25,
+    "random_forest": {
+      "men": {
+        "converted_only": {
+          "r2": 0.721,
+          "train_n": 708,
+          "test_n": 605
+        },
+        "standardized": {
+          "r2": 0.733,
+          "train_n": 708,
+          "test_n": 605
+        },
+        "delta_r2_conv_minus_std": -0.012
+      },
+      "women": {
+        "converted_only": {
+          "r2": 0.753,
+          "train_n": 427,
+          "test_n": 353
+        },
+        "standardized": {
+          "r2": 0.742,
+          "train_n": 427,
+          "test_n": 353
+        },
+        "delta_r2_conv_minus_std": 0.011
+      }
+    }
   }
 }

@@ -347,17 +347,30 @@ def _apply_altitude_array(
     return out
 
 
-def compute_xc_times(df: pd.DataFrame, *, heat_k: float | None = None) -> pd.DataFrame:
+def compute_xc_times(
+    df: pd.DataFrame,
+    *,
+    heat_k: float | None = None,
+    riegel_b_men: float | None = None,
+    riegel_b_women: float | None = None,
+    riegel_b_unified: float | None = None,
+) -> pd.DataFrame:
     """Vectorized XC clocks on a frame from :func:`xc_frame.build_xc_frame`.
 
     Adds ``raw_sec``, ``converted_sec``, and ``standardized_sec`` columns.
+    Optional Riegel overrides support sensitivity analysis (``riegel_b_unified``
+    applies one exponent to all genders).
     """
     out = df.copy()
     raw = out["result_time"].map(parse_time).to_numpy(dtype=float)
     out["raw_sec"] = raw
 
     is_men = out["gender"].eq("M").to_numpy()
-    b = np.where(is_men, RIEGEL_B_MEN, RIEGEL_B_WOMEN)
+    b_m = riegel_b_men if riegel_b_men is not None else RIEGEL_B_MEN
+    b_w = riegel_b_women if riegel_b_women is not None else RIEGEL_B_WOMEN
+    if riegel_b_unified is not None:
+        b_m = b_w = riegel_b_unified
+    b = np.where(is_men, b_m, b_w)
     target = np.where(is_men, XC_TARGET_M, XC_TARGET_F)
     d_reported = out["event_name"].map(parse_event_distance_m).to_numpy(dtype=float)
 

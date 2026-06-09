@@ -1,0 +1,1190 @@
+{
+  "variance_stepwise_ablation": {
+    "min_meets_per_athlete_season": 3,
+    "by_gender": {
+      "Men": {
+        "raw": {
+          "n_athlete_seasons": 3929,
+          "median_sd_sec": 85.08
+        },
+        "converted_only": {
+          "n_athlete_seasons": 3929,
+          "median_sd_sec": 59.12
+        },
+        "pre_weather_env": {
+          "n_athlete_seasons": 3929,
+          "median_sd_sec": 58.66
+        },
+        "fully_standardized": {
+          "n_athlete_seasons": 3929,
+          "median_sd_sec": 55.82
+        }
+      },
+      "Women": {
+        "raw": {
+          "n_athlete_seasons": 2167,
+          "median_sd_sec": 108.21
+        },
+        "converted_only": {
+          "n_athlete_seasons": 2167,
+          "median_sd_sec": 54.9
+        },
+        "pre_weather_env": {
+          "n_athlete_seasons": 2167,
+          "median_sd_sec": 54.59
+        },
+        "fully_standardized": {
+          "n_athlete_seasons": 2167,
+          "median_sd_sec": 52.97
+        }
+      }
+    }
+  },
+  "xc_factor_distributions": {
+    "era": "comprehensive",
+    "n_results": 20095,
+    "weather_factor_all": {
+      "n": 20095,
+      "median": 0.9937,
+      "mean": 0.9901,
+      "p05": 0.9692,
+      "p95": 1.0,
+      "pct_outside_0p95_1p05": 0.37
+    },
+    "weather_factor_hot_H_gt_100": {
+      "n": 16487,
+      "median": 0.9895,
+      "mean": 0.9879,
+      "p05": 0.9663,
+      "p95": 0.9999,
+      "pct_outside_0p95_1p05": 0.45
+    },
+    "elevation_factor": {
+      "n": 20095,
+      "median": 1.0,
+      "mean": 1.0004,
+      "p05": 1.0,
+      "p95": 1.0021,
+      "pct_outside_0p95_1p05": 0.0
+    },
+    "altitude_factor": {
+      "n": 20095,
+      "median": 0.996,
+      "mean": 0.9961,
+      "p05": 0.9926,
+      "p95": 0.9999,
+      "pct_outside_0p95_1p05": 0.0
+    },
+    "median_abs_log_elevation_factor": 0.0
+  },
+  "variance_validation": {
+    "min_distinct_meets_per_athlete_season": 3,
+    "by_gender": [
+      {
+        "gender": "Men",
+        "n_athlete_seasons": 3929,
+        "median_raw_sd_sec": 85.08,
+        "median_converted_only_sd_sec": 59.12,
+        "median_std_sd_sec": 55.82,
+        "pct_reduction_std_vs_raw": 34.4,
+        "pct_reduction_std_vs_converted": 5.6
+      },
+      {
+        "gender": "Women",
+        "n_athlete_seasons": 2167,
+        "median_raw_sd_sec": 108.21,
+        "median_converted_only_sd_sec": 54.9,
+        "median_std_sd_sec": 52.97,
+        "pct_reduction_std_vs_raw": 51.0,
+        "pct_reduction_std_vs_converted": 3.5
+      }
+    ],
+    "pooled_median_raw_sd": 91.85,
+    "pooled_median_converted_only_sd": 57.36,
+    "pooled_median_std_sd": 54.76,
+    "pooled_pct_reduction_std_vs_raw": 40.4,
+    "pooled_pct_reduction_std_vs_converted": 4.5
+  },
+  "improvement_summary": {
+    "pct_positive_improvement": {
+      "converted_only": {
+        "men": 68.2,
+        "women": 70.2
+      },
+      "fully_standardized": {
+        "men": 65.9,
+        "women": 67.8
+      }
+    },
+    "converted_inflation_vs_standardized": {
+      "men": {
+        "excess_median_sec": 7.1,
+        "ratio_converted_to_standardized": 1.21,
+        "pct_inflation_vs_full": 20.7
+      },
+      "women": {
+        "excess_median_sec": 4.7,
+        "ratio_converted_to_standardized": 1.12,
+        "pct_inflation_vs_full": 11.6
+      }
+    }
+  },
+  "metadata_coverage_meet_vs_result": [
+    {
+      "sport": "Cross Country",
+      "era": "comprehensive",
+      "n_results": 23355,
+      "n_meets": 280,
+      "weather_result_pct": 97.7,
+      "weather_meet_pct": 90.7,
+      "course_features_result_pct": 38.5,
+      "course_features_meet_pct": 18.2,
+      "meet_altitude_result_pct": 100.0,
+      "meet_altitude_meet_pct": 99.6
+    },
+    {
+      "sport": "Cross Country",
+      "era": "historical",
+      "n_results": 46930,
+      "n_meets": 244,
+      "weather_result_pct": 4.4,
+      "weather_meet_pct": 3.3,
+      "course_features_result_pct": 3.4,
+      "course_features_meet_pct": 0.8,
+      "meet_altitude_result_pct": 97.5,
+      "meet_altitude_meet_pct": 98.0
+    },
+    {
+      "sport": "Indoor Track",
+      "era": "comprehensive",
+      "n_results": 18638,
+      "n_meets": 266,
+      "weather_result_pct": 0.0,
+      "weather_meet_pct": 0.0,
+      "course_features_result_pct": 0.0,
+      "course_features_meet_pct": 0.0,
+      "meet_altitude_result_pct": 99.4,
+      "meet_altitude_meet_pct": 98.1
+    },
+    {
+      "sport": "Indoor Track",
+      "era": "historical",
+      "n_results": 4171,
+      "n_meets": 60,
+      "weather_result_pct": 0.0,
+      "weather_meet_pct": 0.0,
+      "course_features_result_pct": 0.0,
+      "course_features_meet_pct": 0.0,
+      "meet_altitude_result_pct": 100.0,
+      "meet_altitude_meet_pct": 100.0
+    },
+    {
+      "sport": "Outdoor Track",
+      "era": "comprehensive",
+      "n_results": 21368,
+      "n_meets": 260,
+      "weather_result_pct": 36.9,
+      "weather_meet_pct": 3.8,
+      "course_features_result_pct": 0.0,
+      "course_features_meet_pct": 0.0,
+      "meet_altitude_result_pct": 98.8,
+      "meet_altitude_meet_pct": 99.2
+    },
+    {
+      "sport": "Outdoor Track",
+      "era": "historical",
+      "n_results": 12321,
+      "n_meets": 168,
+      "weather_result_pct": 0.0,
+      "weather_meet_pct": 0.0,
+      "course_features_result_pct": 0.0,
+      "course_features_meet_pct": 0.0,
+      "meet_altitude_result_pct": 100.0,
+      "meet_altitude_meet_pct": 100.0
+    },
+    {
+      "sport": "Road Race",
+      "era": "comprehensive",
+      "n_results": 848,
+      "n_meets": 42,
+      "weather_result_pct": 67.0,
+      "weather_meet_pct": 40.5,
+      "course_features_result_pct": 27.1,
+      "course_features_meet_pct": 16.7,
+      "meet_altitude_result_pct": 100.0,
+      "meet_altitude_meet_pct": 100.0
+    },
+    {
+      "sport": "Road Race",
+      "era": "historical",
+      "n_results": 1332,
+      "n_meets": 16,
+      "weather_result_pct": 34.5,
+      "weather_meet_pct": 18.8,
+      "course_features_result_pct": 0.0,
+      "course_features_meet_pct": 0.0,
+      "meet_altitude_result_pct": 100.0,
+      "meet_altitude_meet_pct": 100.0
+    }
+  ],
+  "xc_time_percentiles": {
+    "unit": "career_pr_best_standardized_sec",
+    "percentile_points": [
+      1,
+      5,
+      10,
+      25,
+      50,
+      75,
+      90,
+      95,
+      99
+    ],
+    "cohorts": {
+      "all_athletes": {
+        "Men": {
+          "n_athletes": 12812,
+          "career_pr_standardized_sec_percentiles": {
+            "p1": 1505.4564,
+            "p5": 1570.5625,
+            "p10": 1611.9934,
+            "p25": 1698.7082,
+            "p50": 1821.9122,
+            "p75": 1987.5764,
+            "p90": 2185.1833,
+            "p95": 2352.9178,
+            "p99": 2847.422
+          },
+          "pct_athletes_at_or_faster_than_anchor": {
+            "ncaa_d1_championship_contender": 0.1,
+            "ncaa_d1_all_american_approx": 0.1,
+            "ncaa_d1_nationals_fifth_man": 4.1,
+            "ncaa_d2_nationals_fifth_man": 21.2,
+            "ncaa_d3_nationals_fifth_man": 39.6,
+            "naia_nationals_fifth_man": 27.2,
+            "njcaa_nationals_fifth_man": 27.2,
+            "nirca_nationals_fifth_man": 11.3,
+            "recreational_5k_equivalent": 45.6
+          }
+        },
+        "Women": {
+          "n_athletes": 8818,
+          "career_pr_standardized_sec_percentiles": {
+            "p1": 1312.2731,
+            "p5": 1387.6748,
+            "p10": 1434.0146,
+            "p25": 1522.5388,
+            "p50": 1641.45,
+            "p75": 1786.8829,
+            "p90": 1960.0865,
+            "p95": 2078.3106,
+            "p99": 2434.7456
+          },
+          "pct_athletes_at_or_faster_than_anchor": {
+            "ncaa_d1_championship_contender": 0.0,
+            "ncaa_d1_all_american_approx": 0.0,
+            "ncaa_d1_nationals_fifth_man": 1.3,
+            "ncaa_d2_nationals_fifth_man": 10.8,
+            "ncaa_d3_nationals_fifth_man": 26.6,
+            "naia_nationals_fifth_man": 15.1,
+            "njcaa_nationals_fifth_man": 26.6,
+            "nirca_nationals_fifth_man": 10.8,
+            "recreational_5k_equivalent": 33.0
+          }
+        }
+      },
+      "min_2_school_years": {
+        "Men": {
+          "n_athletes": 4783,
+          "career_pr_standardized_sec_percentiles": {
+            "p1": 1477.9692,
+            "p5": 1537.2895,
+            "p10": 1570.97,
+            "p25": 1638.0561,
+            "p50": 1737.8194,
+            "p75": 1862.3892,
+            "p90": 1999.3503,
+            "p95": 2103.6051,
+            "p99": 2334.4276
+          },
+          "pct_athletes_at_or_faster_than_anchor": {
+            "ncaa_d1_championship_contender": 0.1,
+            "ncaa_d1_all_american_approx": 0.3,
+            "ncaa_d1_nationals_fifth_man": 8.1,
+            "ncaa_d2_nationals_fifth_man": 35.0,
+            "ncaa_d3_nationals_fifth_man": 57.6,
+            "naia_nationals_fifth_man": 42.9,
+            "njcaa_nationals_fifth_man": 42.9,
+            "nirca_nationals_fifth_man": 20.7,
+            "recreational_5k_equivalent": 64.3
+          }
+        },
+        "Women": {
+          "n_athletes": 2947,
+          "career_pr_standardized_sec_percentiles": {
+            "p1": 1286.0691,
+            "p5": 1349.263,
+            "p10": 1389.9345,
+            "p25": 1463.8142,
+            "p50": 1556.7105,
+            "p75": 1668.2252,
+            "p90": 1783.6221,
+            "p95": 1875.6447,
+            "p99": 2055.4231
+          },
+          "pct_athletes_at_or_faster_than_anchor": {
+            "ncaa_d1_championship_contender": 0.0,
+            "ncaa_d1_all_american_approx": 0.1,
+            "ncaa_d1_nationals_fifth_man": 2.9,
+            "ncaa_d2_nationals_fifth_man": 19.6,
+            "ncaa_d3_nationals_fifth_man": 42.5,
+            "naia_nationals_fifth_man": 26.3,
+            "njcaa_nationals_fifth_man": 42.5,
+            "nirca_nationals_fifth_man": 19.6,
+            "recreational_5k_equivalent": 50.9
+          }
+        }
+      },
+      "min_3_school_years": {
+        "Men": {
+          "n_athletes": 2199,
+          "career_pr_standardized_sec_percentiles": {
+            "p1": 1460.6514,
+            "p5": 1519.5838,
+            "p10": 1550.4745,
+            "p25": 1609.7062,
+            "p50": 1699.4754,
+            "p75": 1812.5947,
+            "p90": 1933.0166,
+            "p95": 2013.0082,
+            "p99": 2192.8601
+          },
+          "pct_athletes_at_or_faster_than_anchor": {
+            "ncaa_d1_championship_contender": 0.1,
+            "ncaa_d1_all_american_approx": 0.4,
+            "ncaa_d1_nationals_fifth_man": 12.2,
+            "ncaa_d2_nationals_fifth_man": 44.4,
+            "ncaa_d3_nationals_fifth_man": 66.4,
+            "naia_nationals_fifth_man": 53.2,
+            "njcaa_nationals_fifth_man": 53.2,
+            "nirca_nationals_fifth_man": 28.7,
+            "recreational_5k_equivalent": 72.9
+          }
+        },
+        "Women": {
+          "n_athletes": 1262,
+          "career_pr_standardized_sec_percentiles": {
+            "p1": 1280.4321,
+            "p5": 1327.6479,
+            "p10": 1362.483,
+            "p25": 1430.4544,
+            "p50": 1518.3862,
+            "p75": 1617.269,
+            "p90": 1723.6732,
+            "p95": 1789.7194,
+            "p99": 1950.6769
+          },
+          "pct_athletes_at_or_faster_than_anchor": {
+            "ncaa_d1_championship_contender": 0.0,
+            "ncaa_d1_all_american_approx": 0.1,
+            "ncaa_d1_nationals_fifth_man": 4.2,
+            "ncaa_d2_nationals_fifth_man": 27.3,
+            "ncaa_d3_nationals_fifth_man": 54.0,
+            "naia_nationals_fifth_man": 35.9,
+            "njcaa_nationals_fifth_man": 54.0,
+            "nirca_nationals_fifth_man": 27.3,
+            "recreational_5k_equivalent": 62.5
+          }
+        }
+      },
+      "min_2_school_years_min_2_races_per_season": {
+        "Men": {
+          "n_athletes": 2980,
+          "career_pr_standardized_sec_percentiles": {
+            "p1": 1463.9871,
+            "p5": 1522.2945,
+            "p10": 1553.9482,
+            "p25": 1612.3941,
+            "p50": 1703.648,
+            "p75": 1814.4392,
+            "p90": 1935.6759,
+            "p95": 2023.0674,
+            "p99": 2215.753
+          },
+          "pct_athletes_at_or_faster_than_anchor": {
+            "ncaa_d1_championship_contender": 0.1,
+            "ncaa_d1_all_american_approx": 0.4,
+            "ncaa_d1_nationals_fifth_man": 11.5,
+            "ncaa_d2_nationals_fifth_man": 43.9,
+            "ncaa_d3_nationals_fifth_man": 66.5,
+            "naia_nationals_fifth_man": 51.9,
+            "njcaa_nationals_fifth_man": 51.9,
+            "nirca_nationals_fifth_man": 27.6,
+            "recreational_5k_equivalent": 72.7
+          }
+        },
+        "Women": {
+          "n_athletes": 1790,
+          "career_pr_standardized_sec_percentiles": {
+            "p1": 1273.6233,
+            "p5": 1330.0066,
+            "p10": 1367.5946,
+            "p25": 1436.1063,
+            "p50": 1522.5328,
+            "p75": 1622.3663,
+            "p90": 1728.7532,
+            "p95": 1795.9865,
+            "p99": 1952.4781
+          },
+          "pct_athletes_at_or_faster_than_anchor": {
+            "ncaa_d1_championship_contender": 0.1,
+            "ncaa_d1_all_american_approx": 0.1,
+            "ncaa_d1_nationals_fifth_man": 4.0,
+            "ncaa_d2_nationals_fifth_man": 26.3,
+            "ncaa_d3_nationals_fifth_man": 52.0,
+            "naia_nationals_fifth_man": 34.1,
+            "njcaa_nationals_fifth_man": 52.0,
+            "nirca_nationals_fifth_man": 26.3,
+            "recreational_5k_equivalent": 60.4
+          }
+        }
+      }
+    },
+    "Men": {
+      "n_athletes": 12812,
+      "distance_km": 8.0,
+      "career_pr_standardized_sec_percentiles": {
+        "p1": 1505.4564,
+        "p5": 1570.5625,
+        "p10": 1611.9934,
+        "p25": 1698.7082,
+        "p50": 1821.9122,
+        "p75": 1987.5764,
+        "p90": 2185.1833,
+        "p95": 2352.9178,
+        "p99": 2847.422
+      },
+      "pct_athletes_at_or_faster_than_anchor": {
+        "ncaa_d1_championship_contender": 0.1,
+        "ncaa_d1_all_american_approx": 0.1,
+        "ncaa_d1_nationals_fifth_man": 4.1,
+        "ncaa_d2_nationals_fifth_man": 21.2,
+        "ncaa_d3_nationals_fifth_man": 39.6,
+        "naia_nationals_fifth_man": 27.2,
+        "njcaa_nationals_fifth_man": 27.2,
+        "nirca_nationals_fifth_man": 11.3,
+        "recreational_5k_equivalent": 45.6
+      },
+      "n_athlete_seasons": 12812,
+      "best_standardized_sec_percentiles": {
+        "p1": 1505.4564,
+        "p5": 1570.5625,
+        "p10": 1611.9934,
+        "p25": 1698.7082,
+        "p50": 1821.9122,
+        "p75": 1987.5764,
+        "p90": 2185.1833,
+        "p95": 2352.9178,
+        "p99": 2847.422
+      },
+      "pct_athlete_seasons_at_or_faster_than_anchor": {
+        "ncaa_d1_championship_contender": 0.1,
+        "ncaa_d1_all_american_approx": 0.1,
+        "ncaa_d1_nationals_fifth_man": 4.1,
+        "ncaa_d2_nationals_fifth_man": 21.2,
+        "ncaa_d3_nationals_fifth_man": 39.6,
+        "naia_nationals_fifth_man": 27.2,
+        "njcaa_nationals_fifth_man": 27.2,
+        "nirca_nationals_fifth_man": 11.3,
+        "recreational_5k_equivalent": 45.6
+      }
+    },
+    "Women": {
+      "n_athletes": 8818,
+      "distance_km": 6.0,
+      "career_pr_standardized_sec_percentiles": {
+        "p1": 1312.2731,
+        "p5": 1387.6748,
+        "p10": 1434.0146,
+        "p25": 1522.5388,
+        "p50": 1641.45,
+        "p75": 1786.8829,
+        "p90": 1960.0865,
+        "p95": 2078.3106,
+        "p99": 2434.7456
+      },
+      "pct_athletes_at_or_faster_than_anchor": {
+        "ncaa_d1_championship_contender": 0.0,
+        "ncaa_d1_all_american_approx": 0.0,
+        "ncaa_d1_nationals_fifth_man": 1.3,
+        "ncaa_d2_nationals_fifth_man": 10.8,
+        "ncaa_d3_nationals_fifth_man": 26.6,
+        "naia_nationals_fifth_man": 15.1,
+        "njcaa_nationals_fifth_man": 26.6,
+        "nirca_nationals_fifth_man": 10.8,
+        "recreational_5k_equivalent": 33.0
+      },
+      "n_athlete_seasons": 8818,
+      "best_standardized_sec_percentiles": {
+        "p1": 1312.2731,
+        "p5": 1387.6748,
+        "p10": 1434.0146,
+        "p25": 1522.5388,
+        "p50": 1641.45,
+        "p75": 1786.8829,
+        "p90": 1960.0865,
+        "p95": 2078.3106,
+        "p99": 2434.7456
+      },
+      "pct_athlete_seasons_at_or_faster_than_anchor": {
+        "ncaa_d1_championship_contender": 0.0,
+        "ncaa_d1_all_american_approx": 0.0,
+        "ncaa_d1_nationals_fifth_man": 1.3,
+        "ncaa_d2_nationals_fifth_man": 10.8,
+        "ncaa_d3_nationals_fifth_man": 26.6,
+        "naia_nationals_fifth_man": 15.1,
+        "njcaa_nationals_fifth_man": 26.6,
+        "nirca_nationals_fifth_man": 10.8,
+        "recreational_5k_equivalent": 33.0
+      }
+    }
+  },
+  "nirca_collegiate_overlap": {
+    "unit": "career_pr_best_standardized_sec",
+    "anchor_definition": "5th finisher among top-15 teams at nationals (standardized sec)",
+    "nirca_nationals_fifth_man_sec": {
+      "Men": 1620,
+      "Women": 1440
+    },
+    "collegiate_nationals_anchors_sec": {
+      "Men": {
+        "ncaa_d1": 1560,
+        "ncaa_d2": 1680,
+        "ncaa_d3": 1770,
+        "naia": 1710,
+        "njcaa": 1710
+      },
+      "Women": {
+        "ncaa_d1": 1320,
+        "ncaa_d2": 1440,
+        "ncaa_d3": 1530,
+        "naia": 1470,
+        "njcaa": 1530
+      }
+    },
+    "by_gender": {
+      "Men": {
+        "n_athletes": 12812,
+        "pct_at_or_faster_than_nirca_fifth_man": 11.3,
+        "by_collegiate_division": {
+          "ncaa_d1": {
+            "anchor_sec": 1560,
+            "pct_all_at_or_faster_anchor": 4.1,
+            "pct_all_meeting_both": 4.1,
+            "pct_nirca_fifth_man_only_not_div": 7.2,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 36.1,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 100.0,
+            "n_at_or_faster_anchor": 523,
+            "n_meeting_both": 523,
+            "n_nirca_fifth_man_only": 927
+          },
+          "ncaa_d2": {
+            "anchor_sec": 1680,
+            "pct_all_at_or_faster_anchor": 21.2,
+            "pct_all_meeting_both": 11.3,
+            "pct_nirca_fifth_man_only_not_div": 0.0,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 100.0,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 53.4,
+            "n_at_or_faster_anchor": 2716,
+            "n_meeting_both": 1450,
+            "n_nirca_fifth_man_only": 0
+          },
+          "ncaa_d3": {
+            "anchor_sec": 1770,
+            "pct_all_at_or_faster_anchor": 39.6,
+            "pct_all_meeting_both": 11.3,
+            "pct_nirca_fifth_man_only_not_div": 0.0,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 100.0,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 28.6,
+            "n_at_or_faster_anchor": 5076,
+            "n_meeting_both": 1450,
+            "n_nirca_fifth_man_only": 0
+          },
+          "naia": {
+            "anchor_sec": 1710,
+            "pct_all_at_or_faster_anchor": 27.2,
+            "pct_all_meeting_both": 11.3,
+            "pct_nirca_fifth_man_only_not_div": 0.0,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 100.0,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 41.6,
+            "n_at_or_faster_anchor": 3482,
+            "n_meeting_both": 1450,
+            "n_nirca_fifth_man_only": 0
+          },
+          "njcaa": {
+            "anchor_sec": 1710,
+            "pct_all_at_or_faster_anchor": 27.2,
+            "pct_all_meeting_both": 11.3,
+            "pct_nirca_fifth_man_only_not_div": 0.0,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 100.0,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 41.6,
+            "n_at_or_faster_anchor": 3482,
+            "n_meeting_both": 1450,
+            "n_nirca_fifth_man_only": 0
+          }
+        }
+      },
+      "Women": {
+        "n_athletes": 8818,
+        "pct_at_or_faster_than_nirca_fifth_man": 10.8,
+        "by_collegiate_division": {
+          "ncaa_d1": {
+            "anchor_sec": 1320,
+            "pct_all_at_or_faster_anchor": 1.3,
+            "pct_all_meeting_both": 1.3,
+            "pct_nirca_fifth_man_only_not_div": 9.5,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 11.8,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 100.0,
+            "n_at_or_faster_anchor": 113,
+            "n_meeting_both": 113,
+            "n_nirca_fifth_man_only": 841
+          },
+          "ncaa_d2": {
+            "anchor_sec": 1440,
+            "pct_all_at_or_faster_anchor": 10.8,
+            "pct_all_meeting_both": 10.8,
+            "pct_nirca_fifth_man_only_not_div": 0.0,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 100.0,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 100.0,
+            "n_at_or_faster_anchor": 954,
+            "n_meeting_both": 954,
+            "n_nirca_fifth_man_only": 0
+          },
+          "ncaa_d3": {
+            "anchor_sec": 1530,
+            "pct_all_at_or_faster_anchor": 26.6,
+            "pct_all_meeting_both": 10.8,
+            "pct_nirca_fifth_man_only_not_div": 0.0,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 100.0,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 40.7,
+            "n_at_or_faster_anchor": 2343,
+            "n_meeting_both": 954,
+            "n_nirca_fifth_man_only": 0
+          },
+          "naia": {
+            "anchor_sec": 1470,
+            "pct_all_at_or_faster_anchor": 15.1,
+            "pct_all_meeting_both": 10.8,
+            "pct_nirca_fifth_man_only_not_div": 0.0,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 100.0,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 71.8,
+            "n_at_or_faster_anchor": 1329,
+            "n_meeting_both": 954,
+            "n_nirca_fifth_man_only": 0
+          },
+          "njcaa": {
+            "anchor_sec": 1530,
+            "pct_all_at_or_faster_anchor": 26.6,
+            "pct_all_meeting_both": 10.8,
+            "pct_nirca_fifth_man_only_not_div": 0.0,
+            "pct_of_nirca_fifth_man_also_at_div_pace": 100.0,
+            "pct_of_div_also_at_nirca_fifth_man_pace": 40.7,
+            "n_at_or_faster_anchor": 2343,
+            "n_meeting_both": 954,
+            "n_nirca_fifth_man_only": 0
+          }
+        }
+      }
+    }
+  },
+  "longitudinal_by_sport": {
+    "Cross Country": {
+      "n_athletes": 21630,
+      "n_athlete_seasons": 33997,
+      "pct_athletes_2plus_seasons": 35.7,
+      "results_per_athlete_season": {
+        "p25": 1.0,
+        "p50": 2.0,
+        "p75": 3.0,
+        "p90": 4.0,
+        "p95": 4.0
+      },
+      "meets_per_athlete_season": {
+        "p25": 1.0,
+        "p50": 2.0,
+        "p75": 3.0,
+        "p90": 4.0,
+        "p95": 4.0
+      }
+    },
+    "Indoor Track": {
+      "n_athletes": 7207,
+      "n_athlete_seasons": 9878,
+      "pct_athletes_2plus_seasons": 27.2,
+      "results_per_athlete_season": {
+        "p25": 1.0,
+        "p50": 2.0,
+        "p75": 3.0,
+        "p90": 5.0,
+        "p95": 6.0
+      },
+      "meets_per_athlete_season": {
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 2.0,
+        "p90": 3.0,
+        "p95": 3.0
+      }
+    },
+    "Outdoor Track": {
+      "n_athletes": 9607,
+      "n_athlete_seasons": 13651,
+      "pct_athletes_2plus_seasons": 30.3,
+      "results_per_athlete_season": {
+        "p25": 1.0,
+        "p50": 2.0,
+        "p75": 3.0,
+        "p90": 5.0,
+        "p95": 6.0
+      },
+      "meets_per_athlete_season": {
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 2.0,
+        "p90": 3.0,
+        "p95": 3.0
+      }
+    },
+    "Road Race": {
+      "n_athletes": 1627,
+      "n_athlete_seasons": 2036,
+      "pct_athletes_2plus_seasons": 20.3,
+      "results_per_athlete_season": {
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 2.0
+      },
+      "meets_per_athlete_season": {
+        "p25": 1.0,
+        "p50": 1.0,
+        "p75": 1.0,
+        "p90": 1.0,
+        "p95": 2.0
+      }
+    }
+  },
+  "meet_size_skew": {
+    "comprehensive_xc_meets": 280,
+    "comprehensive_xc_results": 23355,
+    "pct_results_in_top_10_meets": 28.0,
+    "pct_results_in_top_25_meets": 45.5,
+    "median_results_per_meet": 25,
+    "max_results_per_meet": 1361
+  },
+  "xc_gender_over_time": [
+    {
+      "school_year": 2006,
+      "n_results": 470,
+      "women_pct": 32.3
+    },
+    {
+      "school_year": 2007,
+      "n_results": 801,
+      "women_pct": 38.7
+    },
+    {
+      "school_year": 2008,
+      "n_results": 1159,
+      "women_pct": 36.7
+    },
+    {
+      "school_year": 2009,
+      "n_results": 1864,
+      "women_pct": 40.0
+    },
+    {
+      "school_year": 2010,
+      "n_results": 153,
+      "women_pct": 15.7
+    },
+    {
+      "school_year": 2011,
+      "n_results": 200,
+      "women_pct": 35.0
+    },
+    {
+      "school_year": 2012,
+      "n_results": 156,
+      "women_pct": 42.3
+    },
+    {
+      "school_year": 2013,
+      "n_results": 130,
+      "women_pct": 45.4
+    },
+    {
+      "school_year": 2014,
+      "n_results": 1710,
+      "women_pct": 41.8
+    },
+    {
+      "school_year": 2015,
+      "n_results": 5280,
+      "women_pct": 42.1
+    },
+    {
+      "school_year": 2016,
+      "n_results": 6232,
+      "women_pct": 41.4
+    },
+    {
+      "school_year": 2017,
+      "n_results": 5993,
+      "women_pct": 43.0
+    },
+    {
+      "school_year": 2018,
+      "n_results": 6069,
+      "women_pct": 37.2
+    },
+    {
+      "school_year": 2019,
+      "n_results": 6697,
+      "women_pct": 38.1
+    },
+    {
+      "school_year": 2021,
+      "n_results": 5226,
+      "women_pct": 36.1
+    },
+    {
+      "school_year": 2022,
+      "n_results": 4790,
+      "women_pct": 37.9
+    },
+    {
+      "school_year": 2023,
+      "n_results": 7196,
+      "women_pct": 36.2
+    },
+    {
+      "school_year": 2024,
+      "n_results": 7830,
+      "women_pct": 36.7
+    },
+    {
+      "school_year": 2025,
+      "n_results": 8329,
+      "women_pct": 38.2
+    }
+  ],
+  "meets_missing_course_features_top10": [
+    {
+      "meet_id": 61,
+      "n_results": 533,
+      "course_features_pct": 0.0,
+      "weather_pct": 100.0
+    },
+    {
+      "meet_id": 1354,
+      "n_results": 374,
+      "course_features_pct": 0.0,
+      "weather_pct": 100.0
+    },
+    {
+      "meet_id": 776,
+      "n_results": 360,
+      "course_features_pct": 0.0,
+      "weather_pct": 100.0
+    },
+    {
+      "meet_id": 1340,
+      "n_results": 331,
+      "course_features_pct": 0.0,
+      "weather_pct": 100.0
+    },
+    {
+      "meet_id": 62,
+      "n_results": 312,
+      "course_features_pct": 0.0,
+      "weather_pct": 100.0
+    },
+    {
+      "meet_id": 769,
+      "n_results": 310,
+      "course_features_pct": 70.0,
+      "weather_pct": 100.0
+    },
+    {
+      "meet_id": 1313,
+      "n_results": 287,
+      "course_features_pct": 0.0,
+      "weather_pct": 100.0
+    },
+    {
+      "meet_id": 562,
+      "n_results": 266,
+      "course_features_pct": 0.0,
+      "weather_pct": 100.0
+    },
+    {
+      "meet_id": 594,
+      "n_results": 266,
+      "course_features_pct": 0.0,
+      "weather_pct": 100.0
+    },
+    {
+      "meet_id": 43,
+      "n_results": 258,
+      "course_features_pct": 0.0,
+      "weather_pct": 100.0
+    }
+  ],
+  "ncaa_reference_times_sec": {
+    "Men": {
+      "ncaa_d1_championship_contender": 1410,
+      "ncaa_d1_all_american_approx": 1440,
+      "ncaa_d1_nationals_fifth_man": 1560,
+      "ncaa_d2_nationals_fifth_man": 1680,
+      "ncaa_d3_nationals_fifth_man": 1770,
+      "naia_nationals_fifth_man": 1710,
+      "njcaa_nationals_fifth_man": 1710,
+      "nirca_nationals_fifth_man": 1620,
+      "recreational_5k_equivalent": 1800
+    },
+    "Women": {
+      "ncaa_d1_championship_contender": 1170,
+      "ncaa_d1_all_american_approx": 1200,
+      "ncaa_d1_nationals_fifth_man": 1320,
+      "ncaa_d2_nationals_fifth_man": 1440,
+      "ncaa_d3_nationals_fifth_man": 1530,
+      "naia_nationals_fifth_man": 1470,
+      "njcaa_nationals_fifth_man": 1530,
+      "nirca_nationals_fifth_man": 1440,
+      "recreational_5k_equivalent": 1560
+    }
+  },
+  "nirca_nationals_fifth_man_sec": {
+    "Men": 1620,
+    "Women": 1440
+  },
+  "collegiate_nationals_anchors_sec": {
+    "Men": {
+      "ncaa_d1": 1560,
+      "ncaa_d2": 1680,
+      "ncaa_d3": 1770,
+      "naia": 1710,
+      "njcaa": 1710
+    },
+    "Women": {
+      "ncaa_d1": 1320,
+      "ncaa_d2": 1440,
+      "ncaa_d3": 1530,
+      "naia": 1470,
+      "njcaa": 1530
+    }
+  },
+  "riegel_exponent_sensitivity": {
+    "default_exponents": {
+      "men": 1.055,
+      "women": 1.08
+    },
+    "by_config": {
+      "gender_specific_default": {
+        "pct_reduction_std_vs_raw": {
+          "Men": 34.4,
+          "Women": 51.0
+        },
+        "delta_pp_vs_gender_specific_default": {
+          "Men": 0.0,
+          "Women": 0.0
+        }
+      },
+      "unified_b_1.06": {
+        "pct_reduction_std_vs_raw": {
+          "Men": 34.5,
+          "Women": 50.7
+        },
+        "delta_pp_vs_gender_specific_default": {
+          "Men": 0.1,
+          "Women": -0.3
+        }
+      },
+      "unified_b_1.055": {
+        "pct_reduction_std_vs_raw": {
+          "Men": 34.4,
+          "Women": 50.5
+        },
+        "delta_pp_vs_gender_specific_default": {
+          "Men": 0.0,
+          "Women": -0.5
+        }
+      },
+      "unified_b_1.08": {
+        "pct_reduction_std_vs_raw": {
+          "Men": 35.0,
+          "Women": 51.0
+        },
+        "delta_pp_vs_gender_specific_default": {
+          "Men": 0.6,
+          "Women": 0.0
+        }
+      },
+      "men_1.055_women_1.08_explicit": {
+        "pct_reduction_std_vs_raw": {
+          "Men": 34.4,
+          "Women": 51.0
+        },
+        "delta_pp_vs_gender_specific_default": {
+          "Men": 0.0,
+          "Women": 0.0
+        }
+      }
+    },
+    "max_abs_delta_pp_any_gender": 0.6
+  },
+  "finisher_censoring_sensitivity": {
+    "export_note": "Public export contains approved finisher times only; DNS/DNF are not rows.",
+    "xc_approved_results": 70285,
+    "xc_parseable_times": 70285,
+    "unparseable_times_by_sport": {
+      "Cross Country": 0,
+      "Indoor Track": 2660,
+      "Outdoor Track": 4519,
+      "Road Race": 0
+    },
+    "xc_races_per_athlete_season": {
+      "p50": 1.0,
+      "p90": 3.0,
+      "pct_with_3plus_races": 19.0
+    },
+    "improvement_inflation_by_min_races": {
+      "2": {
+        "n_athlete_seasons": {
+          "men": 8986,
+          "women": 5548
+        },
+        "pct_inflation_vs_full": {
+          "men": 20.7,
+          "women": 11.6
+        }
+      },
+      "3": {
+        "n_athlete_seasons": {
+          "men": 3979,
+          "women": 2192
+        },
+        "pct_inflation_vs_full": {
+          "men": 18.9,
+          "women": 8.7
+        }
+      },
+      "4": {
+        "n_athlete_seasons": {
+          "men": 1290,
+          "women": 705
+        },
+        "pct_inflation_vs_full": {
+          "men": 18.6,
+          "women": 13.4
+        }
+      }
+    }
+  },
+  "track_wind_venue_validation": {
+    "era": "comprehensive",
+    "n_results_parseable": 18438,
+    "sprint_hurdle_wind_applicable": 6939,
+    "sprint_hurdle_wind_recorded": 443,
+    "pct_sprint_wind_recorded": 6.4,
+    "wind_factor_among_applicable": {
+      "n": 6939,
+      "median": 1.0,
+      "mean": 1.0053,
+      "p05": 1.0,
+      "p95": 1.0424,
+      "pct_outside_0p98_1p02": 5.63
+    },
+    "track_venue_factor_all": {
+      "n": 18438,
+      "median": 1.0,
+      "mean": 1.0,
+      "p05": 1.0,
+      "p95": 1.0,
+      "pct_outside_0p98_1p02": 0.0
+    },
+    "full_pipeline_factor_raw_to_adjusted": {
+      "n": 18438,
+      "median": 0.9984,
+      "mean": 0.9945,
+      "p05": 0.9639,
+      "p95": 1.0034,
+      "pct_outside_0p98_1p02": 10.59
+    },
+    "meet_level_weather_pct_from_metadata_table": 3.8
+  },
+  "cross_sport_standardization_checks": {
+    "era": "comprehensive",
+    "by_sport": {
+      "Cross Country": {
+        "n_results_standardized": 31354,
+        "median_factor": 0.9856,
+        "median_abs_log_factor": 0.0211,
+        "pct_factor_outside_0p98_1p02": 51.51
+      },
+      "Indoor Track": {
+        "n_results_standardized": 15124,
+        "median_factor": 0.9999,
+        "median_abs_log_factor": 0.002,
+        "pct_factor_outside_0p98_1p02": 0.09
+      },
+      "Outdoor Track": {
+        "n_results_standardized": 17180,
+        "median_factor": 0.9983,
+        "median_abs_log_factor": 0.0025,
+        "pct_factor_outside_0p98_1p02": 10.36
+      },
+      "Road Race": {
+        "n_results_standardized": 848,
+        "median_factor": 0.9984,
+        "median_abs_log_factor": 0.0016,
+        "pct_factor_outside_0p98_1p02": 1.53
+      }
+    }
+  },
+  "ml_meet_holdout_temporal": {
+    "protocol": "temporal_train_2023_test_2024_features_exclude_25pct_meets",
+    "held_out_meet_fraction": 0.25,
+    "n_held_out_meets": 25,
+    "random_forest": {
+      "men": {
+        "converted_only": {
+          "r2": 0.721,
+          "train_n": 708,
+          "test_n": 605
+        },
+        "standardized": {
+          "r2": 0.733,
+          "train_n": 708,
+          "test_n": 605
+        },
+        "delta_r2_conv_minus_std": -0.012
+      },
+      "women": {
+        "converted_only": {
+          "r2": 0.753,
+          "train_n": 427,
+          "test_n": 353
+        },
+        "standardized": {
+          "r2": 0.742,
+          "train_n": 427,
+          "test_n": 353
+        },
+        "delta_r2_conv_minus_std": 0.011
+      }
+    }
+  }
+}

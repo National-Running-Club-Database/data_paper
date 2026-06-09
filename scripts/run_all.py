@@ -44,6 +44,11 @@ def main() -> None:
         help="Run illustrative RF R² check (requires sklearn; not in dataset_stats.json).",
     )
     parser.add_argument(
+        "--supplement",
+        action="store_true",
+        help="Also write results/supplement_stats.json (extended validation bundle; includes ML R² if sklearn installed).",
+    )
+    parser.add_argument(
         "--quiet",
         action="store_true",
         help="Disable progress bars (same as NRCD_NO_PROGRESS=1).",
@@ -96,6 +101,12 @@ def main() -> None:
 
     out_json = RESULTS / "dataset_stats.json"
     out_json.write_text(json.dumps(payload, indent=2))
+
+    if args.supplement:
+        from supplement_report import main as supplement_main
+
+        print("Running supplement report...", file=sys.stderr)
+        supplement_main(run_ml=args.run_ml or not args.paper_only, progress_disable=progress_disable)
 
     elapsed = time.perf_counter() - t0
     print(json.dumps(payload, indent=2))
